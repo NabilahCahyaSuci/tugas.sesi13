@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan OOP Dart (Struktur: Judul, Penjelasan, Code, Tombol)</title>
+
+<style>
+/* ===== POPUP IMAGE ===== */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.image-modal-content {
+    display: block;
+    margin: 5% auto;
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 10px;
+}
+
+.close-image {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* ===== UI PERTAHAN (SESUAI ASLI) ===== */
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#ffe6f2;
+    color:#4a0d33;
+}
+
+header{
+    background:#ffb3d9;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+}
+
+header p{
+    margin:5px 0 0 0;
+    font-weight:bold;
+}
+
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+
+h2{
+    color:#cc0066;
+    margin-top:40px;
+}
+
+/* iframe wrapper */
+.iframe-wrapper {
+    margin-top: 15px;
+}
+
+iframe{
+    width:100%;
+    height:400px;
+    border:1px solid #ff99cc;
+    border-radius:6px;
+}
+
+/* tombol popup */
+.btn-popup {
+    background-color: #cc0066;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(204, 0, 102, 0.3);
+    transition: background-color 0.2s;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 5px 0;
+    position: relative;
+    z-index: 10;
+}
+.btn-popup:hover {
+    background-color: #a30552;
+}
+.btn-popup:active {
+    transform: scale(0.97);
+}
+
+/* kontainer per topik - mengikuti struktur baru: judul, penjelasan, code, tombol, iframe */
+.topik-section {
+    margin-bottom: 40px;
+    border-bottom: 1px dashed #ffb3d9;
+    padding-bottom: 25px;
+}
+
+.topik-judul {
+    color: #cc0066;
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    border-left: 6px solid #ff99cc;
+    padding-left: 15px;
+}
+
+.topik-penjelasan {
+    background: #fff0f7;
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin: 10px 0 15px 0;
+    line-height: 1.6;
+}
+
+/* area kode Dart (pratinjau) - tampil seperti code snippet */
+.code-block {
+    background-color: #2d0a1f;  /* gelap biar kontras */
+    color: #ffe6f2;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    padding: 15px 20px;
+    border-radius: 14px;
+    border: 1px solid #ff99cc;
+    overflow-x: auto;
+    white-space: pre-wrap;       /* wrap kode panjang */
+    word-break: break-word;
+    margin: 15px 0 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    line-height: 1.5;
+}
+
+/* kondisi iframe tersembunyi */
+iframe.hidden-iframe {
+    display: none;
+}
+
+/* Style untuk Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    overflow: auto;
+}
+
+.modal-content {
+    position: relative;
+    margin: 5% auto;
+    width: 90%;
+    height: 85%;
+    max-width: 1200px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.modal-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    right: -10px;
+    top: -15px;
+    color: white;
+    background: #cc0066;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.close-btn:hover {
+    background: #a30552;
+}
+
+/* footer */
+footer{
+    text-align:center;
+    padding:15px;
+    background:#ffb3d9;
+    margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Sistem Manajemen Perpustakaan</h1>
+    <p> Nabilah Cahya Suci | 251410018 | SI2A</p>
+    <p>Aghista Bunga Kirani | 251410027 | SI2A</p>
+    
+</header>
+
+<section class="container">
+  <div class="card">
+    <h2> 🔹 Masalahnya </h2>
+    <div class="topik-section">
+ <div class="topik-penjelasan">
+
+   <p>
+Dalam sistem manajemen perpustakaan, sering ditemukan berbagai permasalahan yang muncul akibat sistem yang belum terstruktur dengan baik atau masih dilakukan secara manual. Permasalahan ini tidak hanya menghambat proses kerja, tetapi juga dapat menyebabkan kesalahan data dan menurunkan kualitas pelayanan. Berikut penjelasan dari masing-masing masalah:
+</p>
+
+<p><b>a. Data Buku, Anggota, dan Petugas Masih Tercampur</b><br>
+Dalam sistem yang tidak terorganisir, data buku, anggota, dan petugas sering disimpan dalam satu tempat tanpa pemisahan yang jelas. Hal ini menyebabkan kesulitan dalam pengelolaan data, karena setiap jenis data memiliki karakteristik yang berbeda. Misalnya, data buku memiliki atribut seperti judul dan penulis, sedangkan anggota memiliki nama dan alamat. Jika semua data dicampur, maka akan sulit untuk mengelola, mencari, dan memperbarui data secara efisien. Selain itu, risiko kesalahan dalam pengolahan data juga menjadi lebih tinggi.
+</p>
+
+<p><b>b. Sulit Melacak Siapa yang Meminjam Buku</b><br>
+Tanpa sistem yang terstruktur, perpustakaan akan kesulitan dalam mengetahui siapa yang sedang meminjam suatu buku. Hal ini terjadi karena tidak adanya hubungan yang jelas antara data buku dan data anggota. Akibatnya, ketika terjadi keterlambatan pengembalian atau kehilangan buku, petugas tidak dapat dengan mudah melacak siapa peminjamnya. Masalah ini juga dapat menyebabkan kerugian bagi perpustakaan karena buku tidak kembali tepat waktu atau bahkan hilang.
+</p>
+
+<p><b>c. Proses Peminjaman dan Pengembalian Tidak Terstruktur</b><br>
+Proses peminjaman dan pengembalian yang dilakukan tanpa alur yang jelas dapat menyebabkan kebingungan dan kesalahan pencatatan. Misalnya, tidak ada aturan yang mengatur kapan buku harus dikembalikan atau bagaimana mencatat tanggal peminjaman. Hal ini membuat proses menjadi tidak konsisten dan sulit untuk diawasi. Selain itu, tanpa sistem yang baik, petugas harus melakukan banyak pekerjaan manual yang memakan waktu dan tenaga.
+</p>
+
+<p><b>d. Data Mudah Duplikat atau Tidak Konsisten</b><br>
+Karena tidak adanya mekanisme pengelolaan data yang baik, sering terjadi duplikasi data, seperti satu buku yang dicatat lebih dari satu kali atau data anggota yang sama tetapi dengan penulisan yang berbeda. Selain itu, data juga bisa menjadi tidak konsisten, misalnya status buku tidak sesuai antara data satu dengan yang lain. Hal ini dapat menyebabkan kebingungan dan menurunkan keakuratan informasi dalam sistem.
+</p>
+
+<p><b>e. Sulit Dikembangkan Jika Fitur Bertambah</b><br>
+Sistem yang tidak dirancang dengan konsep yang terstruktur akan sulit untuk dikembangkan di masa depan. Ketika ingin menambahkan fitur baru, seperti denda keterlambatan atau reservasi buku, sistem yang ada harus diubah secara besar-besaran. Hal ini tidak efisien dan berisiko menimbulkan error baru. Oleh karena itu, diperlukan pendekatan yang lebih terstruktur seperti Object-Oriented Programming (OOP) agar sistem mudah dikembangkan dan dipelihara.
+</p>
+
+<p><b>Kesimpulan Masalah:</b><br>
+Berdasarkan permasalahan di atas, dapat disimpulkan bahwa sistem perpustakaan membutuhkan pendekatan yang lebih terstruktur dan modular. Penggunaan konsep Object-Oriented Programming (OOP) menjadi solusi yang tepat karena mampu memisahkan data berdasarkan objek, menghubungkan antar data dengan jelas, serta mempermudah pengembangan sistem di masa depan.
+</p>
+  </div>
+</section>
+
+
+<section class="container">
+  <div class="card">
+    <h2> 🔹 Kenapa Lebih Baik Menggunakan OOP </h2>
+    <div class="topik-section">
+ <div class="topik-penjelasan">
+  
+    <p>
+Permasalahan dalam sistem perpustakaan lebih efektif diselesaikan dengan Object-Oriented Programming (OOP) karena pendekatan ini mampu mengelola sistem secara terstruktur, fleksibel, dan sesuai dengan kondisi nyata. Berikut penjelasannya:
+</p>
+
+<p><b>a. Data Lebih Terstruktur</b><br>
+Dalam OOP, setiap entitas seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan <i>Transaksi</i> dibuat dalam class terpisah. Hal ini membuat data tidak tercampur, lebih rapi, dan mudah dikelola.
+</p>
+
+<p><b>b. Mudah Dikembangkan</b><br>
+OOP memungkinkan penambahan fitur baru (seperti denda atau reservasi) tanpa mengubah seluruh sistem. Cukup menambahkan atau memperbarui class tertentu sehingga lebih fleksibel dan aman.
+</p>
+
+<p><b>c. Menghindari Duplikasi Kode</b><br>
+Dengan konsep inheritance, kode yang sama dapat digunakan kembali. Hal ini membuat program lebih efisien, lebih singkat, dan mudah dipelihara.
+</p>
+
+<p><b>d. Keamanan Data (Encapsulation)</b><br>
+Data penting dilindungi dalam class dan hanya bisa diakses melalui method tertentu. Ini mencegah perubahan data secara sembarangan dan menjaga konsistensi sistem.
+</p>
+
+<p><b>e. Sesuai dengan Dunia Nyata</b><br>
+Objek dalam OOP merepresentasikan objek nyata seperti buku dan anggota, sehingga sistem lebih mudah dipahami dan sesuai dengan alur kerja perpustakaan.
+</p>
+
+  </div>
+</section>
+
+<section class="container">
+  <div class="card">
+    <h2> 🔹 Langkah Penyelesaian Masalah </h2>
+    <div class="topik-section">
+ <div class="topik-penjelasan">
+  
+    <p>
+Untuk mengatasi berbagai permasalahan dalam sistem manajemen perpustakaan, diperlukan langkah-langkah penyelesaian yang terstruktur dengan menggunakan pendekatan Object-Oriented Programming (OOP). Berikut tahapan yang dapat dilakukan:
+</p>
+
+<p><b>a. Identifikasi Kebutuhan Sistem</b><br>
+Menentukan kebutuhan utama sistem, seperti pengelolaan data buku, anggota, petugas, serta proses peminjaman dan pengembalian. Tahap ini penting agar sistem yang dibuat sesuai dengan kebutuhan perpustakaan.
+</p>
+
+<p><b>b. Menentukan Class dan Objek</b><br>
+Mengidentifikasi entitas yang akan dijadikan class, seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan <i>Transaksi</i>. Setiap class memiliki atribut dan method sesuai fungsinya.
+</p>
+
+<p><b>c. Mendesain Struktur OOP</b><br>
+Menyusun hubungan antar class menggunakan konsep OOP seperti:
+- <i>Encapsulation</i> untuk melindungi data  
+- <i>Inheritance</i> untuk pewarisan sifat  
+- <i>Association</i> untuk hubungan antar objek  
+Tahap ini biasanya divisualisasikan dalam bentuk class diagram.
+</p>
+
+<p><b>d. Implementasi Program</b><br>
+Menerjemahkan desain ke dalam kode program (misalnya Java, Python, atau C++). Setiap class diimplementasikan sesuai perannya dalam sistem.
+</p>
+
+<p><b>e. Pengujian Sistem</b><br>
+Melakukan testing untuk memastikan semua fitur berjalan dengan baik, seperti proses peminjaman, pengembalian, dan pencatatan data.
+</p>
+
+<p><b>f. Pengembangan dan Pemeliharaan</b><br>
+Melakukan perbaikan dan penambahan fitur baru (misalnya denda atau notifikasi) tanpa merusak sistem utama, berkat struktur OOP yang fleksibel.
+</p>
+
+<p><b>Kesimpulan:</b><br>
+Dengan mengikuti langkah-langkah tersebut, sistem perpustakaan dapat dibangun secara terstruktur, mudah dikembangkan, serta mampu menyelesaikan permasalahan yang ada secara efektif.
+</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="card">
+    <h2>🔹 Implementasi Source Code Dart</h2>
+      <div class="code-block">
+<pre><code>
+// Nama : Nabilah cahya suci (251410018)
+// Nama : Aghista bunga  kirani
+// Kelas : SI2A
+
+// ================================
+// CLASS BUKU
+// ================================
+class Buku {
+  String judul;
+  String penulis;
+  bool tersedia;
+
+  Buku(this.judul, this.penulis, this.tersedia);
+
+  void tampilkanInfo() {
+    print("Judul     : $judul");
+    print("Penulis   : $penulis");
+    print("Status    : ${tersedia ? 'Tersedia' : 'Dipinjam'}");
+  }
+
+  void pinjam() {
+    if (tersedia) {
+      tersedia = false;
+      print("Buku '$judul' berhasil dipinjam.");
+    } else {
+      print("Buku '$judul' sedang tidak tersedia.");
+    }
+  }
+
+  void kembalikan() {
+    if (!tersedia) {
+      tersedia = true;
+      print("Buku '$judul' telah dikembalikan.");
+    } else {
+      print("Buku '$judul' sudah tersedia.");
+    }
+  }
+}
+
+// ================================
+// CLASS ANGGOTA
+// ================================
+class Anggota {
+  String nama;
+  String idAnggota;
+  String alamat;
+  int totalPinjam;
+
+  Anggota(this.nama, this.idAnggota, this.alamat)
+      : totalPinjam = 0;
+
+  void tampilkanInfo() {
+    print("Nama Anggota : $nama");
+    print("ID Anggota   : $idAnggota");
+    print("Alamat       : $alamat");
+    print("Total Pinjam : $totalPinjam buku");
+  }
+
+  void pinjamBuku(Transaksi transaksi) {
+    transaksi.prosesPinjam();
+    if (transaksi.status == "Berhasil") {
+      totalPinjam++;
+    }
+  }
+}
+
+// ================================
+// CLASS TRANSAKSI
+// ================================
+class Transaksi {
+  String idTransaksi;
+  Anggota anggota;
+  Buku buku;
+  String status;
+
+  Transaksi(this.idTransaksi, this.anggota, this.buku)
+      : status = "Menunggu";
+
+  void prosesPinjam() {
+    if (buku.tersedia) {
+      status = "Berhasil";
+      buku.pinjam();
+      print("Transaksi '$idTransaksi' berhasil!");
+    } else {
+      status = "Gagal";
+      print("Transaksi gagal, buku '${buku.judul}' sedang dipinjam.");
+    }
+  }
+
+  void tampilkanStruk() {
+    print("====== STRUK TRANSAKSI ======");
+    print("ID Transaksi : $idTransaksi");
+    print("Anggota      : ${anggota.nama}");
+    print("Buku         : ${buku.judul}");
+    print("Status       : $status");
+    print("=============================");
+  }
+}
+
+// ================================
+// MAIN – INTERAKSI ANTAR OBJEK
+// ================================
+void main() {
+  // Membuat objek buku
+  Buku b1 = Buku("Pemrograman OOP", "Andi", true);
+  Buku b2 = Buku("Struktur Data", "Budi", true);
+  Buku b3 = Buku("Basis Data", "Citra", false);
+
+  // Membuat objek anggota
+  Anggota a1 = Anggota("Nabila", "A001", "Bekasi");
+  Anggota a2 = Anggota("Rizky", "A002", "Jakarta");
+
+  // ---- Informasi Awal ----
+  print("--- Info Buku Awal ---");
+  b1.tampilkanInfo();
+  print("");
+  b2.tampilkanInfo();
+  print("");
+  b3.tampilkanInfo();
+
+  // ---- Proses Peminjaman ----
+  print("\n--- Nabila Meminjam Buku OOP ---");
+  Transaksi t1 = Transaksi("TRX001", a1, b1);
+  a1.pinjamBuku(t1);
+
+  print("\n--- Rizky Meminjam Buku yang Sudah Dipinjam ---");
+  Transaksi t2 = Transaksi("TRX002", a2, b3);
+  a2.pinjamBuku(t2);
+
+  print("\n--- Rizky Meminjam Struktur Data ---");
+  Transaksi t3 = Transaksi("TRX003", a2, b2);
+  a2.pinjamBuku(t3);
+
+  // ---- Struk Transaksi ----
+  print("\n--- Struk Transaksi Berhasil ---");
+  t1.tampilkanStruk();
+  print("");
+  t3.tampilkanStruk();
+
+  // ---- Info Akhir ----
+  print("\n--- Info Buku Setelah Transaksi ---");
+  b1.tampilkanInfo();
+
+  print("\n--- Info Anggota Setelah Pinjam ---");
+  a1.tampilkanInfo();
+  print("");
+  a2.tampilkanInfo();
+}
+
+</div>
+    <button class="btn-popup" onclick="openDartPad('e06a74f83ad85d002c711913e8c86246')">▶ Jalankan Kode di DartPad</button>
+</button>
+  </div>
+</div>
+
+
+    <!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDartPad()">&times;</span>
+        <iframe id="dartpadIframe" src="" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+    </div>
+</div>
+
+<script>
+    // SECURITY PROTOCOL: ANTI-VANDALISM & ANTI-VIEWSOURCE
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function (e) {
+      if (e.keyCode == 123) return false; // F12
+      if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
+      if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
+      if (e.ctrlKey && e.keyCode == 83) return false; // Ctrl+S
+    };
+    
+    // Fungsi untuk membuka DartPad di modal
+    function openDartPad(id) {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Set src iframe dengan ID yang benar
+        iframe.src = 'https://dartpad.dev/embed-inline.html?id=' + id + '&theme=dark&run=true';
+        
+        // Tampilkan modal
+        modal.style.display = 'block';
+        
+        // Cegah scroll di background
+        document.body.style.overflow = 'hidden';
+    }
+    // Fungsi buka gambar
+function openImage(src) {
+    const modal = document.getElementById("imageModal");
+    const img = document.getElementById("popupImage");
+
+    img.src = src;
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+// Fungsi tutup gambar
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
+    // Fungsi untuk menutup modal
+    function closeDartPad() {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Sembunyikan modal
+        modal.style.display = 'none';
+        
+        // Hentikan iframe dengan mengosongkan src
+        iframe.src = '';
+        
+        // Kembalikan scroll
+        document.body.style.overflow = 'auto';
+    }
+
+    // Tutup modal jika klik di luar konten modal
+    window.onclick = function(event) {
+    const dartModal = document.getElementById('dartpadModal');
+    const imageModal = document.getElementById('imageModal');
+
+    if (event.target == dartModal) {
+        closeDartPad();
+    }
+    if (event.target == imageModal) {
+        closeImage();
+    }
+}
+</script>
+<!-- MODAL IMAGE -->
+<div id="imageModal" class="image-modal">
+    <span class="close-image" onclick="closeImage()">&times;</span>
+    <img class="image-modal-content" id="popupImage">
+</div>
+</body>
+</html>
