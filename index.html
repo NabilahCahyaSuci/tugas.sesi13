@@ -347,38 +347,51 @@ Dengan mengikuti langkah-langkah tersebut, sistem perpustakaan dapat dibangun se
     <h2>🔹 Implementasi Source Code Dart</h2>
       <div class="code-block">
 <pre><code>
-// Nama : Nabilah cahya suci (251410018)
-// Nama : Aghista bunga  kirani
+// Nama : Nabilah Cahya Suci (251410018)
+// Nama : Aghista Bunga Kirani (251410027)
 // Kelas : SI2A
 
-// ================================
+// =====================================================
 // CLASS BUKU
-// ================================
+// Berfungsi untuk menyimpan data buku dan mengelola
+// status peminjaman buku.
+// =====================================================
 class Buku {
-  String judul;
-  String penulis;
-  bool tersedia;
 
+  // Properti (atribut) buku
+  String judul;      // Menyimpan judul buku
+  String penulis;    // Menyimpan nama penulis
+  bool tersedia;     // Menyimpan status ketersediaan buku
+
+  // Constructor
+  // Digunakan untuk mengisi data buku saat objek dibuat
   Buku(this.judul, this.penulis, this.tersedia);
 
+  // Method untuk menampilkan informasi buku
   void tampilkanInfo() {
     print("Judul     : $judul");
     print("Penulis   : $penulis");
     print("Status    : ${tersedia ? 'Tersedia' : 'Dipinjam'}");
   }
 
+  // Method untuk meminjam buku
   void pinjam() {
+
+    // Jika buku tersedia
     if (tersedia) {
-      tersedia = false;
+      tersedia = false; // Status berubah menjadi dipinjam
       print("Buku '$judul' berhasil dipinjam.");
     } else {
       print("Buku '$judul' sedang tidak tersedia.");
     }
   }
 
+  // Method untuk mengembalikan buku
   void kembalikan() {
+
+    // Jika buku sedang dipinjam
     if (!tersedia) {
-      tersedia = true;
+      tersedia = true; // Status berubah menjadi tersedia
       print("Buku '$judul' telah dikembalikan.");
     } else {
       print("Buku '$judul' sudah tersedia.");
@@ -386,18 +399,24 @@ class Buku {
   }
 }
 
-// ================================
+// =====================================================
 // CLASS ANGGOTA
-// ================================
+// Berfungsi untuk menyimpan data anggota perpustakaan
+// dan mencatat jumlah buku yang dipinjam.
+// =====================================================
 class Anggota {
-  String nama;
-  String idAnggota;
-  String alamat;
-  int totalPinjam;
 
+  // Properti anggota
+  String nama;         // Nama anggota
+  String idAnggota;    // ID anggota
+  String alamat;       // Alamat anggota
+  int totalPinjam;     // Jumlah buku yang berhasil dipinjam
+
+  // Constructor
   Anggota(this.nama, this.idAnggota, this.alamat)
       : totalPinjam = 0;
 
+  // Method untuk menampilkan data anggota
   void tampilkanInfo() {
     print("Nama Anggota : $nama");
     print("ID Anggota   : $idAnggota");
@@ -405,37 +424,59 @@ class Anggota {
     print("Total Pinjam : $totalPinjam buku");
   }
 
+  // Method untuk meminjam buku melalui transaksi
   void pinjamBuku(Transaksi transaksi) {
+
+    // Menjalankan proses peminjaman
     transaksi.prosesPinjam();
+
+    // Jika transaksi berhasil,
+    // jumlah pinjaman anggota bertambah
     if (transaksi.status == "Berhasil") {
       totalPinjam++;
     }
   }
 }
 
-// ================================
+// =====================================================
 // CLASS TRANSAKSI
-// ================================
+// Berfungsi untuk menghubungkan anggota dan buku
+// dalam proses peminjaman.
+// =====================================================
 class Transaksi {
-  String idTransaksi;
-  Anggota anggota;
-  Buku buku;
-  String status;
 
+  // Properti transaksi
+  String idTransaksi; // ID transaksi
+  Anggota anggota;    // Data anggota yang meminjam
+  Buku buku;          // Buku yang dipinjam
+  String status;      // Status transaksi
+
+  // Constructor
   Transaksi(this.idTransaksi, this.anggota, this.buku)
       : status = "Menunggu";
 
+  // Method untuk memproses peminjaman buku
   void prosesPinjam() {
+
+    // Jika buku tersedia
     if (buku.tersedia) {
-      status = "Berhasil";
+      status = "Berhasil"; // Status transaksi berhasil
+
+      // Memanggil method pinjam() dari class Buku
       buku.pinjam();
+
       print("Transaksi '$idTransaksi' berhasil!");
     } else {
+
+      // Jika buku tidak tersedia
       status = "Gagal";
-      print("Transaksi gagal, buku '${buku.judul}' sedang dipinjam.");
+
+      print(
+          "Transaksi gagal, buku '${buku.judul}' sedang dipinjam.");
     }
   }
 
+  // Method untuk mencetak struk transaksi
   void tampilkanStruk() {
     print("====== STRUK TRANSAKSI ======");
     print("ID Transaksi : $idTransaksi");
@@ -446,10 +487,12 @@ class Transaksi {
   }
 }
 
-// ================================
-// MAIN – INTERAKSI ANTAR OBJEK
-// ================================
+// =====================================================
+// MAIN PROGRAM
+// Tempat eksekusi program dimulai.
+// =====================================================
 void main() {
+
   // Membuat objek buku
   Buku b1 = Buku("Pemrograman OOP", "Andi", true);
   Buku b2 = Buku("Struktur Data", "Budi", true);
@@ -459,7 +502,7 @@ void main() {
   Anggota a1 = Anggota("Nabila", "A001", "Bekasi");
   Anggota a2 = Anggota("Rizky", "A002", "Jakarta");
 
-  // ---- Informasi Awal ----
+  // Menampilkan informasi awal buku
   print("--- Info Buku Awal ---");
   b1.tampilkanInfo();
   print("");
@@ -467,29 +510,32 @@ void main() {
   print("");
   b3.tampilkanInfo();
 
-  // ---- Proses Peminjaman ----
+  // Membuat transaksi peminjaman buku OOP
   print("\n--- Nabila Meminjam Buku OOP ---");
   Transaksi t1 = Transaksi("TRX001", a1, b1);
   a1.pinjamBuku(t1);
 
+  // Rizky mencoba meminjam buku yang tidak tersedia
   print("\n--- Rizky Meminjam Buku yang Sudah Dipinjam ---");
   Transaksi t2 = Transaksi("TRX002", a2, b3);
   a2.pinjamBuku(t2);
 
+  // Rizky meminjam buku Struktur Data
   print("\n--- Rizky Meminjam Struktur Data ---");
   Transaksi t3 = Transaksi("TRX003", a2, b2);
   a2.pinjamBuku(t3);
 
-  // ---- Struk Transaksi ----
+  // Menampilkan struk transaksi yang berhasil
   print("\n--- Struk Transaksi Berhasil ---");
   t1.tampilkanStruk();
   print("");
   t3.tampilkanStruk();
 
-  // ---- Info Akhir ----
+  // Menampilkan status buku setelah transaksi
   print("\n--- Info Buku Setelah Transaksi ---");
   b1.tampilkanInfo();
 
+  // Menampilkan data anggota setelah peminjaman
   print("\n--- Info Anggota Setelah Pinjam ---");
   a1.tampilkanInfo();
   print("");
