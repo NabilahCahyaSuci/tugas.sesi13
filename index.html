@@ -1,388 +1,854 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laporan OOP Dart (Struktur: Judul, Penjelasan, Code, Tombol)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan OOP Dart - Sistem Manajemen Perpustakaan</title>
 
-<style>
-/* ===== POPUP IMAGE ===== */
-.image-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-}
+    <style>
+        /* ===== POPUP IMAGE ===== */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
 
-.image-modal-content {
-    display: block;
-    margin: 5% auto;
-    max-width: 90%;
-    max-height: 85%;
-    border-radius: 10px;
-}
+        .image-modal-content {
+            display: block;
+            margin: 5% auto;
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 10px;
+        }
 
-.close-image {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    color: white;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-}
-/* ===== UI PERTAHAN (SESUAI ASLI) ===== */
-body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:#ffe6f2;
-    color:#4a0d33;
-}
+        .close-image {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-header{
-    background:#ffb3d9;
-    padding:20px;
-    text-align:center;
-}
+        /* ===== UI UTAMA ===== */
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffe6f2;
+            color: #4a0d33;
+        }
 
-header h1{
-    margin:0;
-}
+        header {
+            background: #ffb3d9;
+            padding: 20px;
+            text-align: center;
+        }
 
-header p{
-    margin:5px 0 0 0;
-    font-weight:bold;
-}
+        header h1 {
+            margin: 0;
+        }
 
-.container{
-    width:90%;
-    max-width:1000px;
-    margin:20px auto;
-    background:white;
-    padding:25px;
-    border-radius:8px;
-    box-shadow:0 4px 8px rgba(0,0,0,0.1);
-}
+        header p {
+            margin: 5px 0 0 0;
+            font-weight: bold;
+        }
 
-h2{
-    color:#cc0066;
-    margin-top:40px;
-}
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-/* iframe wrapper */
-.iframe-wrapper {
-    margin-top: 15px;
-}
+        h2 {
+            color: #cc0066;
+            margin-top: 40px;
+        }
 
-iframe{
-    width:100%;
-    height:400px;
-    border:1px solid #ff99cc;
-    border-radius:6px;
-}
+        .btn-popup {
+            background-color: #cc0066;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(204, 0, 102, 0.3);
+            transition: background-color 0.2s;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0 5px 0;
+        }
 
-/* tombol popup */
-.btn-popup {
-    background-color: #cc0066;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 30px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(204, 0, 102, 0.3);
-    transition: background-color 0.2s;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 10px 0 5px 0;
-    position: relative;
-    z-index: 10;
-}
-.btn-popup:hover {
-    background-color: #a30552;
-}
-.btn-popup:active {
-    transform: scale(0.97);
-}
+        .btn-popup:hover {
+            background-color: #a30552;
+        }
 
-/* kontainer per topik - mengikuti struktur baru: judul, penjelasan, code, tombol, iframe */
-.topik-section {
-    margin-bottom: 40px;
-    border-bottom: 1px dashed #ffb3d9;
-    padding-bottom: 25px;
-}
+        .topik-section {
+            margin-bottom: 40px;
+            border-bottom: 1px dashed #ffb3d9;
+            padding-bottom: 25px;
+        }
 
-.topik-judul {
-    color: #cc0066;
-    font-size: 1.5rem;
-    margin: 0 0 10px 0;
-    border-left: 6px solid #ff99cc;
-    padding-left: 15px;
-}
+        .topik-penjelasan {
+            background: #fff0f7;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin: 10px 0 15px 0;
+            line-height: 1.6;
+        }
 
-.topik-penjelasan {
-    background: #fff0f7;
-    padding: 12px 18px;
-    border-radius: 12px;
-    margin: 10px 0 15px 0;
-    line-height: 1.6;
-}
+        .code-block {
+            background-color: #2d0a1f;
+            color: #ffe6f2;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            padding: 15px 20px;
+            border-radius: 14px;
+            border: 1px solid #ff99cc;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin: 15px 0 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+        }
 
-/* area kode Dart (pratinjau) - tampil seperti code snippet */
-.code-block {
-    background-color: #2d0a1f;  /* gelap biar kontras */
-    color: #ffe6f2;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9rem;
-    padding: 15px 20px;
-    border-radius: 14px;
-    border: 1px solid #ff99cc;
-    overflow-x: auto;
-    white-space: pre-wrap;       /* wrap kode panjang */
-    word-break: break-word;
-    margin: 15px 0 10px 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    line-height: 1.5;
-}
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+        }
 
-/* kondisi iframe tersembunyi */
-iframe.hidden-iframe {
-    display: none;
-}
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            width: 90%;
+            height: 85%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+        }
 
-/* Style untuk Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    overflow: auto;
-}
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
 
-.modal-content {
-    position: relative;
-    margin: 5% auto;
-    width: 90%;
-    height: 85%;
-    max-width: 1200px;
-    background: white;
-    border-radius: 12px;
-    padding: 10px;
-}
+        .close-btn {
+            position: absolute;
+            right: -10px;
+            top: -15px;
+            color: white;
+            background: #cc0066;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
-.modal-content iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 8px;
-}
+        .close-btn:hover {
+            background: #a30552;
+        }
 
-.close-btn {
-    position: absolute;
-    right: -10px;
-    top: -15px;
-    color: white;
-    background: #cc0066;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 1001;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
+        /* Diagram container */
+        .diagram-container {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ffb3d9;
+            text-align: center;
+            overflow-x: auto;
+        }
 
-.close-btn:hover {
-    background: #a30552;
-}
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+        }
 
-/* footer */
-footer{
-    text-align:center;
-    padding:15px;
-    background:#ffb3d9;
-    margin-top:40px;
-}
-</style>
+        .note {
+            background: #fff0f7;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .note ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .btn-download {
+            background: #cc0066;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+            font-weight: bold;
+        }
+
+        .btn-download:hover {
+            background: #a30552;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #ffb3d9;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .diagram-container svg {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        /* ==================== DIAGRAM TABS (CineBook Style) ==================== */
+        .diag-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            border-bottom: 2px solid #ffb3d9;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .diag-tab-btn {
+            padding: 8px 18px;
+            background: #fff0f7;
+            border: 1px solid #ffb3d9;
+            border-radius: 20px;
+            color: #cc0066;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .diag-tab-btn:hover {
+            border-color: #cc0066;
+            background: #ffe6f2;
+        }
+
+        .diag-tab-btn.active {
+            background: #cc0066;
+            color: #fff;
+            border-color: #cc0066;
+            box-shadow: 0 2px 5px rgba(204, 0, 102, 0.3);
+        }
+
+        .diag-tab-content {
+            transition: opacity 0.35s ease;
+        }
+
+        .diag-tab-content.hidden-tab {
+            position: absolute;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .diag-tab-content.active {
+            position: relative;
+            visibility: visible;
+            height: auto;
+            opacity: 1;
+        }
+
+        /* ==================== SPLIT DIAGRAM & PSEUDOCODE ==================== */
+        .diag-split {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+            margin-top: 15px;
+        }
+
+        .pseudocode-wrapper {
+            background: #2d0a1f;
+            border: 1px solid #ff99cc;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pseudocode-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ffb3d9;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .pseudocode-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .pseudocode-header .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .pseudocode-header .dot.red { background: #ff5f56; }
+        .pseudocode-header .dot.yellow { background: #ffbd2e; }
+        .pseudocode-header .dot.green { background: #27c93f; }
+
+        .pseudocode-header .title {
+            color: #ffe6f2;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .pseudocode-wrapper pre {
+            margin: 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #ffe6f2;
+            white-space: pre-wrap;
+        }
+
+        .pseudocode-wrapper .keyword {
+            color: #ff79c6;
+            font-weight: bold;
+        }
+
+        .pseudocode-wrapper .comment {
+            color: #a37590;
+            font-style: italic;
+        }
+
+        .pseudocode-wrapper .string {
+            color: #f1fa8c;
+        }
+
+        .pseudocode-wrapper .number {
+            color: #bd93f9;
+        }
+
+        /* Slim Scrollbar */
+        .pseudocode-wrapper::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .pseudocode-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .pseudocode-wrapper::-webkit-scrollbar-thumb {
+            background: #ffb3d9;
+            border-radius: 10px;
+            border: 2px solid #2d0a1f;
+        }
+        .pseudocode-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #cc0066;
+        }
+
+        .diagram-card-wrapper {
+            position: relative;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .btn-zoom-diag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            background: rgba(204, 0, 102, 0.15);
+            color: #cc0066;
+            border: 1px solid rgba(204, 0, 102, 0.4);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-zoom-diag:hover {
+            background: #cc0066;
+            color: white;
+        }
+
+        @media (max-width: 992px) {
+            .diag-split {
+                grid-template-columns: 1fr;
+            }
+        }
+        .mermaid {
+            background: transparent;
+            border: none;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            width: 100%;
+        }
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Sistem Manajemen Perpustakaan</h1>
-    <p> Nabilah Cahya Suci | 251410018 | SI2A</p>
-    <p>Aghista Bunga Kirani | 251410027 | SI2A</p>
+    <header>
+        <h1>Sistem Manajemen Perpustakaan</h1>
+        <p>Nabilah Cahya Suci | 251410018 | SI2A</p>
+        <p>Aghista Bunga Kirani | 251410027 | SI2A</p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: MASALAH -->
+    <!-- ============================================ -->
+    <section class="container">
+        <div class="card">
+            <h2>🔹 Masalahnya</h2>
+            <div class="topik-section">
+                <div class="topik-penjelasan">
+                    <p>Dalam sistem manajemen perpustakaan, sering ditemukan berbagai permasalahan yang muncul akibat
+                        sistem yang belum terstruktur dengan baik atau masih dilakukan secara manual. Permasalahan ini
+                        tidak hanya menghambat proses kerja, tetapi juga dapat menyebabkan kesalahan data dan menurunkan
+                        kualitas pelayanan. Berikut penjelasan dari masing-masing masalah:</p>
+
+                    <p><b>a. Data Buku, Anggota, dan Petugas Masih Tercampur</b><br>
+                        Dalam sistem yang tidak terorganisir, data buku, anggota, dan petugas sering disimpan dalam satu
+                        tempat tanpa pemisahan yang jelas. Hal ini menyebabkan kesulitan dalam pengelolaan data, karena
+                        setiap jenis data memiliki karakteristik yang berbeda. Misalnya, data buku memiliki atribut
+                        seperti judul dan penulis, sedangkan anggota memiliki nama dan alamat. Jika semua data dicampur,
+                        maka akan sulit untuk mengelola, mencari, dan memperbarui data secara efisien. Selain itu,
+                        risiko kesalahan dalam pengolahan data juga menjadi lebih tinggi.</p>
+
+                    <p><b>b. Sulit Melacak Siapa yang Meminjam Buku</b><br>
+                        Tanpa sistem yang terstruktur, perpustakaan akan kesulitan dalam mengetahui siapa yang sedang
+                        meminjam suatu buku. Hal ini terjadi karena tidak adanya hubungan yang jelas antara data buku
+                        dan data anggota. Akibatnya, ketika terjadi keterlambatan pengembalian atau kehilangan buku,
+                        petugas tidak dapat dengan mudah melacak siapa peminjamnya. Masalah ini juga dapat menyebabkan
+                        kerugian bagi perpustakaan karena buku tidak kembali tepat waktu atau bahkan hilang.</p>
+
+                    <p><b>c. Proses Peminjaman dan Pengembalian Tidak Terstruktur</b><br>
+                        Proses peminjaman dan pengembalian yang dilakukan tanpa alur yang jelas dapat menyebabkan
+                        kebingungan dan kesalahan pencatatan. Misalnya, tidak ada aturan yang mengatur kapan buku harus
+                        dikembalikan atau bagaimana mencatat tanggal peminjaman. Hal ini membuat proses menjadi tidak
+                        konsisten dan sulit untuk diawasi. Selain itu, tanpa sistem yang baik, petugas harus melakukan
+                        banyak pekerjaan manual yang memakan waktu dan tenaga.</p>
+
+                    <p><b>d. Data Mudah Duplikat atau Tidak Konsisten</b><br>
+                        Karena tidak adanya mekanisme pengelolaan data yang baik, sering terjadi duplikasi data, seperti
+                        satu buku yang dicatat lebih dari satu kali atau data anggota yang sama tetapi dengan penulisan
+                        yang berbeda. Selain itu, data juga bisa menjadi tidak konsisten, misalnya status buku tidak
+                        sesuai antara data satu dengan yang lain. Hal ini dapat menyebabkan kebingungan dan menurunkan
+                        keakuratan informasi dalam sistem.</p>
+
+                    <p><b>e. Sulit Dikembangkan Jika Fitur Bertambah</b><br>
+                        Sistem yang tidak dirancang dengan konsep yang terstruktur akan sulit untuk dikembangkan di masa
+                        depan. Ketika ingin menambahkan fitur baru, seperti denda keterlambatan atau reservasi buku,
+                        sistem yang ada harus diubah secara besar-besaran. Hal ini tidak efisien dan berisiko
+                        menimbulkan error baru. Oleh karena itu, diperlukan pendekatan yang lebih terstruktur seperti
+                        Object-Oriented Programming (OOP) agar sistem mudah dikembangkan dan dipelihara.</p>
+
+                    <p><b>Kesimpulan Masalah:</b><br>
+                        Berdasarkan permasalahan di atas, dapat disimpulkan bahwa sistem perpustakaan membutuhkan
+                        pendekatan yang lebih terstruktur dan modular. Penggunaan konsep Object-Oriented Programming
+                        (OOP) menjadi solusi yang tepat karena mampu memisahkan data berdasarkan objek, menghubungkan
+                        antar data dengan jelas, serta mempermudah pengembangan sistem di masa depan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: KENAPA OOP -->
+    <!-- ============================================ -->
+    <section class="container">
+        <div class="card">
+            <h2>🔹 Kenapa Lebih Baik Menggunakan OOP</h2>
+            <div class="topik-section">
+                <div class="topik-penjelasan">
+                    <p>Permasalahan dalam sistem perpustakaan lebih efektif diselesaikan dengan Object-Oriented
+                        Programming (OOP) karena pendekatan ini mampu mengelola sistem secara terstruktur, fleksibel,
+                        dan sesuai dengan kondisi nyata. Berikut penjelasannya:</p>
+
+                    <p><b>a. Data Lebih Terstruktur</b><br>
+                        Dalam OOP, setiap entitas seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan
+                        <i>Transaksi</i> dibuat dalam class terpisah. Hal ini membuat data tidak tercampur, lebih rapi,
+                        dan mudah dikelola.</p>
+
+                    <p><b>b. Mudah Dikembangkan</b><br>
+                        OOP memungkinkan penambahan fitur baru (seperti denda atau reservasi) tanpa mengubah seluruh
+                        sistem. Cukup menambahkan atau memperbarui class tertentu sehingga lebih fleksibel dan aman.</p>
+
+                    <p><b>c. Menghindari Duplikasi Kode</b><br>
+                        Dengan konsep inheritance, kode yang sama dapat digunakan kembali. Hal ini membuat program lebih
+                        efisien, lebih singkat, dan mudah dipelihara.</p>
+
+                    <p><b>d. Keamanan Data (Encapsulation)</b><br>
+                        Data penting dilindungi dalam class dan hanya bisa diakses melalui method tertentu. Ini mencegah
+                        perubahan data secara sembarangan dan menjaga konsistensi sistem.</p>
+
+                    <p><b>e. Sesuai dengan Dunia Nyata</b><br>
+                        Objek dalam OOP merepresentasikan objek nyata seperti buku dan anggota, sehingga sistem lebih
+                        mudah dipahami dan sesuai dengan alur kerja perpustakaan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: LANGKAH PENYELESAIAN -->
+    <!-- ============================================ -->
+    <section class="container">
+        <div class="card">
+            <h2>🔹 Langkah Penyelesaian Masalah</h2>
+            <div class="topik-section">
+                <div class="topik-penjelasan">
+                    <p>Untuk mengatasi berbagai permasalahan dalam sistem manajemen perpustakaan, diperlukan
+                        langkah-langkah penyelesaian yang terstruktur dengan menggunakan pendekatan Object-Oriented
+                        Programming (OOP). Berikut tahapan yang dapat dilakukan:</p>
+
+                    <p><b>a. Identifikasi Kebutuhan Sistem</b><br>
+                        Menentukan kebutuhan utama sistem, seperti pengelolaan data buku, anggota, petugas, serta proses
+                        peminjaman dan pengembalian. Tahap ini penting agar sistem yang dibuat sesuai dengan kebutuhan
+                        perpustakaan.</p>
+
+                    <p><b>b. Menentukan Class dan Objek</b><br>
+                        Mengidentifikasi entitas yang akan dijadikan class, seperti <i>Buku</i>, <i>Anggota</i>,
+                        <i>Petugas</i>, dan <i>Transaksi</i>. Setiap class memiliki atribut dan method sesuai fungsinya.
+                    </p>
+
+                    <p><b>c. Mendesain Struktur OOP</b><br>
+                        Menyusun hubungan antar class menggunakan konsep OOP seperti:
+                        - <i>Encapsulation</i> untuk melindungi data
+                        - <i>Inheritance</i> untuk pewarisan sifat
+                        - <i>Association</i> untuk hubungan antar objek
+                        Tahap ini biasanya divisualisasikan dalam bentuk class diagram.</p>
+
+                    <p><b>d. Implementasi Program</b><br>
+                        Menerjemahkan desain ke dalam kode program (misalnya Java, Python, atau C++). Setiap class
+                        diimplementasikan sesuai perannya dalam sistem.</p>
+
+                    <p><b>e. Pengujian Sistem</b><br>
+                        Melakukan testing untuk memastikan semua fitur berjalan dengan baik, seperti proses peminjaman,
+                        pengembalian, dan pencatatan data.</p>
+
+                    <p><b>f. Pengembangan dan Pemeliharaan</b><br>
+                        Melakukan perbaikan dan penambahan fitur baru (misalnya denda atau notifikasi) tanpa merusak
+                        sistem utama, berkat struktur OOP yang fleksibel.</p>
+
+                    <p><b>Kesimpulan:</b><br>
+                        Dengan mengikuti langkah-langkah tersebut, sistem perpustakaan dapat dibangun secara
+                        terstruktur, mudah dikembangkan, serta mampu menyelesaikan permasalahan yang ada secara efektif.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: DIAGRAM LOGIKA & ALUR SISTEM -->
+    <!-- ============================================ -->
+    <section class="container" id="section-diagrams">
+        <div class="card">
+            <h2>📊 DIAGRAM LOGIKA &amp; ALUR SISTEM</h2>
+            <div style="color: #666; font-size: 14.5px; margin-bottom: 20px; line-height: 1.5;">
+                Visualisasi diagram kelas OOP (Object-Oriented Programming), alur algoritma peminjaman buku, dan alur algoritma pengembalian buku pada sistem perpustakaan.
+            </div>
+            
+            <div class="diag-tabs">
+                <button class="diag-tab-btn active" onclick="switchDiagramTab(event, 'diag-uml')">Diagram Kelas (UML)</button>
+                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-booking')">Alur Peminjaman (Flowchart &amp; Pseudocode)</button>
+                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-return')">Alur Pengembalian (Flowchart &amp; Pseudocode)</button>
+            </div>
+
+            <!-- Tab: UML -->
+            <div class="diag-tab-content active" id="diag-uml">
+                <div class="note" style="margin-bottom: 15px;">
+                    <p><strong>Deskripsi:</strong> Class Diagram menunjukkan hubungan antar class dalam sistem perpustakaan:</p>
+                    <ul>
+                        <li><strong>Buku</strong> - atribut: judul, penulis, tersedia | method: pinjam(), kembalikan(), tampilkanInfo()</li>
+                        <li><strong>Anggota</strong> - atribut: nama, idAnggota, alamat, totalPinjam | method: pinjamBuku(), kembalikanBuku(), tampilkanInfo()</li>
+                        <li><strong>Transaksi</strong> - atribut: idTransaksi, status | method: prosesPinjam(), prosesKembalikan(), tampilkanStruk()</li>
+                        <li><strong>LaporanBuku</strong> - method static: cetakDaftarBuku()</li>
+                    </ul>
+                </div>
+                <div class="diagram-card-wrapper">
+                    <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                        <div class="mermaid">
+classDiagram
+    class Buku {
+        +String judul
+        +String penulis
+        +bool tersedia
+        +Buku(String judul, String penulis, bool tersedia)
+        +void tampilkanInfo()
+        +bool pinjam()
+        +void kembalikan()
+    }
+    class Anggota {
+        +String nama
+        +String idAnggota
+        +String alamat
+        +int totalPinjam
+        +Anggota(String nama, String idAnggota, String alamat)
+        +void tampilkanInfo()
+        +void pinjamBuku(Transaksi t)
+        +void kembalikanBuku(Transaksi t)
+    }
+    class Transaksi {
+        +String idTransaksi
+        +Anggota anggota
+        +Buku buku
+        +String status
+        +Transaksi(String idTransaksi, Anggota anggota, Buku buku)
+        +bool prosesPinjam()
+        +void prosesKembalikan()
+        +void tampilkanStruk()
+    }
+    class LaporanBuku {
+        +static void cetakDaftarBuku(List~Buku~ daftarBuku)
+    }
+
+    Anggota --> Transaksi : Memiliki / Melakukan
+    Transaksi --> Buku : Meminjam
+    Transaksi --> Anggota : Mengaitkan
+    LaporanBuku ..> Buku : Menggunakan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Alur Peminjaman -->
+            <div class="diag-tab-content hidden-tab" id="diag-booking">
+                <div class="diag-split">
+                    <div class="diagram-card-wrapper">
+                        <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                            <div class="mermaid">
+flowchart TD
+    Start([Mulai]) --> CallPinjam[Anggota Panggil pinjamBuku t]
+    CallPinjam --> ProcPinjam[Transaksi Jalankan prosesPinjam]
+    ProcPinjam --> CheckAvail{Buku Tersedia?}
     
-</header>
+    CheckAvail -- Ya --> BookPinjam[buku.pinjam: set tersedia = false]
+    BookPinjam --> SetSuccess[status = Berhasil]
+    SetSuccess --> ReturnTrue[Return true]
+    ReturnTrue --> IncPinjam[anggota.totalPinjam + 1]
+    
+    CheckAvail -- Tidak --> SetFailed[status = Gagal]
+    SetFailed --> ReturnFalse[Return false]
+    ReturnFalse --> KeepPinjam[anggota.totalPinjam tetap]
+    
+    IncPinjam --> PrintStruk[t.tampilkanStruk]
+    KeepPinjam --> PrintStruk
+    PrintStruk --> End([Selesai])
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pseudocode-wrapper">
+                        <div class="pseudocode-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="title">📋 Pseudocode Peminjaman Buku</div>
+                            <div style="width: 42px;"></div>
+                        </div>
+                        <pre><span class="comment">// Algoritma Peminjaman Buku</span>
+<span class="keyword">FUNGSI</span> pinjamBuku(t: Transaksi)
+<span class="keyword">MULAI</span>:
+    hasil = t.prosesPinjam()
+    <span class="keyword">JIKA</span> hasil == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        totalPinjam = totalPinjam + <span class="number">1</span>
+    <span class="keyword">AKHIR JIKA</span>
+<span class="keyword">SELESAI</span>
 
-<section class="container">
-  <div class="card">
-    <h2> 🔹 Masalahnya </h2>
-    <div class="topik-section">
- <div class="topik-penjelasan">
+<span class="keyword">FUNGSI</span> prosesPinjam() -> <span class="keyword">Boolean</span>
+<span class="keyword">MULAI</span>:
+    <span class="keyword">JIKA</span> buku.pinjam() == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        status = <span class="string">"Berhasil"</span>
+        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi BERHASIL"</span>
+        <span class="keyword">KEMBALIKAN</span> <span class="keyword">TRUE</span>
+    <span class="keyword">LAINNYA</span>
+        status = <span class="string">"Gagal"</span>
+        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi GAGAL"</span>
+        <span class="keyword">KEMBALIKAN</span> <span class="keyword">FALSE</span>
+    <span class="keyword">AKHIR JIKA</span>
+<span class="keyword">SELESAI</span>
 
-   <p>
-Dalam sistem manajemen perpustakaan, sering ditemukan berbagai permasalahan yang muncul akibat sistem yang belum terstruktur dengan baik atau masih dilakukan secara manual. Permasalahan ini tidak hanya menghambat proses kerja, tetapi juga dapat menyebabkan kesalahan data dan menurunkan kualitas pelayanan. Berikut penjelasan dari masing-masing masalah:
-</p>
+<span class="keyword">FUNGSI</span> pinjam() -> <span class="keyword">Boolean</span>
+<span class="keyword">MULAI</span>:
+    <span class="keyword">JIKA</span> tersedia == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        tersedia = <span class="keyword">FALSE</span>
+        <span class="keyword">KEMBALIKAN</span> <span class="keyword">TRUE</span>
+    <span class="keyword">LAINNYA</span>
+        <span class="keyword">KEMBALIKAN</span> <span class="keyword">FALSE</span>
+    <span class="keyword">AKHIR JIKA</span>
+<span class="keyword">SELESAI</span></pre>
+                    </div>
+                </div>
+            </div>
 
-<p><b>a. Data Buku, Anggota, dan Petugas Masih Tercampur</b><br>
-Dalam sistem yang tidak terorganisir, data buku, anggota, dan petugas sering disimpan dalam satu tempat tanpa pemisahan yang jelas. Hal ini menyebabkan kesulitan dalam pengelolaan data, karena setiap jenis data memiliki karakteristik yang berbeda. Misalnya, data buku memiliki atribut seperti judul dan penulis, sedangkan anggota memiliki nama dan alamat. Jika semua data dicampur, maka akan sulit untuk mengelola, mencari, dan memperbarui data secara efisien. Selain itu, risiko kesalahan dalam pengolahan data juga menjadi lebih tinggi.
-</p>
+            <!-- Tab: Alur Pengembalian -->
+            <div class="diag-tab-content hidden-tab" id="diag-return">
+                <div class="diag-split">
+                    <div class="diagram-card-wrapper">
+                        <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                            <div class="mermaid">
+flowchart TD
+    Start([Mulai]) --> CallKembali[Anggota Panggil kembalikanBuku t]
+    CallKembali --> ProcKembali[Transaksi Jalankan prosesKembalikan]
+    ProcKembali --> CheckBorrowed{Buku Sedang Dipinjam? tersedia == false}
+    
+    CheckBorrowed -- Ya --> BookReturn[buku.kembalikan: set tersedia = true]
+    BookReturn --> SetReturned[status = Dikembalikan]
+    SetReturned --> CheckTotalPinjam{anggota.totalPinjam > 0?}
+    CheckTotalPinjam -- Ya --> DecPinjam[anggota.totalPinjam - 1]
+    CheckTotalPinjam -- Tidak --> KeepTotal[anggota.totalPinjam tetap]
+    
+    CheckBorrowed -- Tidak --> BookAvail[Print Buku sudah tersedia]
+    
+    DecPinjam --> End([Selesai])
+    KeepTotal --> End
+    BookAvail --> End
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pseudocode-wrapper">
+                        <div class="pseudocode-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="title">📋 Pseudocode Pengembalian Buku</div>
+                            <div style="width: 42px;"></div>
+                        </div>
+                        <pre><span class="comment">// Algoritma Pengembalian Buku</span>
+<span class="keyword">FUNGSI</span> kembalikanBuku(t: Transaksi)
+<span class="keyword">MULAI</span>:
+    t.prosesKembalikan()
+    <span class="keyword">JIKA</span> totalPinjam > <span class="number">0</span> <span class="keyword">MAKA</span>
+        totalPinjam = totalPinjam - <span class="number">1</span>
+    <span class="keyword">AKHIR JIKA</span>
+<span class="keyword">SELESAI</span>
 
-<p><b>b. Sulit Melacak Siapa yang Meminjam Buku</b><br>
-Tanpa sistem yang terstruktur, perpustakaan akan kesulitan dalam mengetahui siapa yang sedang meminjam suatu buku. Hal ini terjadi karena tidak adanya hubungan yang jelas antara data buku dan data anggota. Akibatnya, ketika terjadi keterlambatan pengembalian atau kehilangan buku, petugas tidak dapat dengan mudah melacak siapa peminjamnya. Masalah ini juga dapat menyebabkan kerugian bagi perpustakaan karena buku tidak kembali tepat waktu atau bahkan hilang.
-</p>
+<span class="keyword">FUNGSI</span> prosesKembalikan()
+<span class="keyword">MULAI</span>:
+    <span class="keyword">JIKA</span> buku.tersedia == <span class="keyword">FALSE</span> <span class="keyword">MAKA</span>
+        buku.kembalikan()
+        status = <span class="string">"Dikembalikan"</span>
+        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi BERHASIL DIKEMBALIKAN"</span>
+    <span class="keyword">LAINNYA</span>
+        <span class="keyword">TAMPILKAN</span> <span class="string">"Buku sudah tersedia"</span>
+    <span class="keyword">AKHIR JIKA</span>
+<span class="keyword">SELESAI</span>
 
-<p><b>c. Proses Peminjaman dan Pengembalian Tidak Terstruktur</b><br>
-Proses peminjaman dan pengembalian yang dilakukan tanpa alur yang jelas dapat menyebabkan kebingungan dan kesalahan pencatatan. Misalnya, tidak ada aturan yang mengatur kapan buku harus dikembalikan atau bagaimana mencatat tanggal peminjaman. Hal ini membuat proses menjadi tidak konsisten dan sulit untuk diawasi. Selain itu, tanpa sistem yang baik, petugas harus melakukan banyak pekerjaan manual yang memakan waktu dan tenaga.
-</p>
+<span class="keyword">FUNGSI</span> kembalikan()
+<span class="keyword">MULAI</span>:
+    tersedia = <span class="keyword">TRUE</span>
+<span class="keyword">SELESAI</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p><b>d. Data Mudah Duplikat atau Tidak Konsisten</b><br>
-Karena tidak adanya mekanisme pengelolaan data yang baik, sering terjadi duplikasi data, seperti satu buku yang dicatat lebih dari satu kali atau data anggota yang sama tetapi dengan penulisan yang berbeda. Selain itu, data juga bisa menjadi tidak konsisten, misalnya status buku tidak sesuai antara data satu dengan yang lain. Hal ini dapat menyebabkan kebingungan dan menurunkan keakuratan informasi dalam sistem.
-</p>
-
-<p><b>e. Sulit Dikembangkan Jika Fitur Bertambah</b><br>
-Sistem yang tidak dirancang dengan konsep yang terstruktur akan sulit untuk dikembangkan di masa depan. Ketika ingin menambahkan fitur baru, seperti denda keterlambatan atau reservasi buku, sistem yang ada harus diubah secara besar-besaran. Hal ini tidak efisien dan berisiko menimbulkan error baru. Oleh karena itu, diperlukan pendekatan yang lebih terstruktur seperti Object-Oriented Programming (OOP) agar sistem mudah dikembangkan dan dipelihara.
-</p>
-
-<p><b>Kesimpulan Masalah:</b><br>
-Berdasarkan permasalahan di atas, dapat disimpulkan bahwa sistem perpustakaan membutuhkan pendekatan yang lebih terstruktur dan modular. Penggunaan konsep Object-Oriented Programming (OOP) menjadi solusi yang tepat karena mampu memisahkan data berdasarkan objek, menghubungkan antar data dengan jelas, serta mempermudah pengembangan sistem di masa depan.
-</p>
-  </div>
-</section>
-
-
-<section class="container">
-  <div class="card">
-    <h2> 🔹 Kenapa Lebih Baik Menggunakan OOP </h2>
-    <div class="topik-section">
- <div class="topik-penjelasan">
-  
-    <p>
-Permasalahan dalam sistem perpustakaan lebih efektif diselesaikan dengan Object-Oriented Programming (OOP) karena pendekatan ini mampu mengelola sistem secara terstruktur, fleksibel, dan sesuai dengan kondisi nyata. Berikut penjelasannya:
-</p>
-
-<p><b>a. Data Lebih Terstruktur</b><br>
-Dalam OOP, setiap entitas seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan <i>Transaksi</i> dibuat dalam class terpisah. Hal ini membuat data tidak tercampur, lebih rapi, dan mudah dikelola.
-</p>
-
-<p><b>b. Mudah Dikembangkan</b><br>
-OOP memungkinkan penambahan fitur baru (seperti denda atau reservasi) tanpa mengubah seluruh sistem. Cukup menambahkan atau memperbarui class tertentu sehingga lebih fleksibel dan aman.
-</p>
-
-<p><b>c. Menghindari Duplikasi Kode</b><br>
-Dengan konsep inheritance, kode yang sama dapat digunakan kembali. Hal ini membuat program lebih efisien, lebih singkat, dan mudah dipelihara.
-</p>
-
-<p><b>d. Keamanan Data (Encapsulation)</b><br>
-Data penting dilindungi dalam class dan hanya bisa diakses melalui method tertentu. Ini mencegah perubahan data secara sembarangan dan menjaga konsistensi sistem.
-</p>
-
-<p><b>e. Sesuai dengan Dunia Nyata</b><br>
-Objek dalam OOP merepresentasikan objek nyata seperti buku dan anggota, sehingga sistem lebih mudah dipahami dan sesuai dengan alur kerja perpustakaan.
-</p>
-
-  </div>
-</section>
-
-<section class="container">
-  <div class="card">
-    <h2> 🔹 Langkah Penyelesaian Masalah </h2>
-    <div class="topik-section">
- <div class="topik-penjelasan">
-  
-    <p>
-Untuk mengatasi berbagai permasalahan dalam sistem manajemen perpustakaan, diperlukan langkah-langkah penyelesaian yang terstruktur dengan menggunakan pendekatan Object-Oriented Programming (OOP). Berikut tahapan yang dapat dilakukan:
-</p>
-
-<p><b>a. Identifikasi Kebutuhan Sistem</b><br>
-Menentukan kebutuhan utama sistem, seperti pengelolaan data buku, anggota, petugas, serta proses peminjaman dan pengembalian. Tahap ini penting agar sistem yang dibuat sesuai dengan kebutuhan perpustakaan.
-</p>
-
-<p><b>b. Menentukan Class dan Objek</b><br>
-Mengidentifikasi entitas yang akan dijadikan class, seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan <i>Transaksi</i>. Setiap class memiliki atribut dan method sesuai fungsinya.
-</p>
-
-<p><b>c. Mendesain Struktur OOP</b><br>
-Menyusun hubungan antar class menggunakan konsep OOP seperti:
-- <i>Encapsulation</i> untuk melindungi data  
-- <i>Inheritance</i> untuk pewarisan sifat  
-- <i>Association</i> untuk hubungan antar objek  
-Tahap ini biasanya divisualisasikan dalam bentuk class diagram.
-</p>
-
-<p><b>d. Implementasi Program</b><br>
-Menerjemahkan desain ke dalam kode program (misalnya Java, Python, atau C++). Setiap class diimplementasikan sesuai perannya dalam sistem.
-</p>
-
-<p><b>e. Pengujian Sistem</b><br>
-Melakukan testing untuk memastikan semua fitur berjalan dengan baik, seperti proses peminjaman, pengembalian, dan pencatatan data.
-</p>
-
-<p><b>f. Pengembangan dan Pemeliharaan</b><br>
-Melakukan perbaikan dan penambahan fitur baru (misalnya denda atau notifikasi) tanpa merusak sistem utama, berkat struktur OOP yang fleksibel.
-</p>
-
-<p><b>Kesimpulan:</b><br>
-Dengan mengikuti langkah-langkah tersebut, sistem perpustakaan dapat dibangun secara terstruktur, mudah dikembangkan, serta mampu menyelesaikan permasalahan yang ada secara efektif.
-</p>
-  </div>
-</section>
-
-<section class="container">
-  <div class="card">
-    <h2>🔹 Implementasi Source Code Dart</h2>
-      <div class="code-block">
-<pre><code>
+    <!-- ============================================ -->
+    <!-- SECTION 9: SOURCE CODE DART -->
+    <!-- ============================================ -->
+    <section class="container">
+        <div class="card">
+            <h2>🔹 Implementasi Source Code Dart</h2>
+            <div class="code-block">
+                <pre><code>
 // Nama : Nabilah Cahya Suci (251410018)
 // Nama : Aghista Bunga Kirani (251410027)
 // Kelas : SI2A
 // Project : SISTEM MANAJEMEN PERPUSTAKAAN
 
-
 // ======================================================
 // CLASS BUKU
-// Berfungsi untuk menyimpan data buku
 // ======================================================
 class Buku {
-  String judul;     // menyimpan nama buku
-  String penulis;   // menyimpan nama penulis
-  bool tersedia;    // status buku (true = tersedia, false = dipinjam)
+  String judul;
+  String penulis;
+  bool tersedia;
 
-  // Constructor
   Buku(this.judul, this.penulis, this.tersedia);
 
-  // Method untuk menampilkan info buku
   void tampilkanInfo() {
     print("Judul   : $judul");
     print("Penulis : $penulis");
     print("Status  : ${tersedia ? 'Tersedia' : 'Dipinjam'}");
   }
 
-  // Method untuk proses peminjaman buku
   bool pinjam() {
-    if (tersedia) {        // jika buku tersedia
-      tersedia = false;    // ubah jadi dipinjam
-      return true;         // berhasil
-    } else {
-      return false;        // gagal
+    if (tersedia) {
+      tersedia = false;
+      return true;
     }
+    return false;
   }
 
-  // Method untuk mengembalikan buku
   void kembalikan() {
     tersedia = true;
   }
@@ -390,70 +856,94 @@ class Buku {
 
 // ======================================================
 // CLASS ANGGOTA
-// Menyimpan data anggota perpustakaan
 // ======================================================
 class Anggota {
-  String nama;        // nama anggota
-  String idAnggota;   // ID anggota
-  String alamat;      // alamat anggota
-  int totalPinjam;    // jumlah buku yang dipinjam
+  String nama;
+  String idAnggota;
+  String alamat;
+  int totalPinjam;
 
-  // Constructor
   Anggota(this.nama, this.idAnggota, this.alamat)
       : totalPinjam = 0;
 
-  // Method menampilkan data anggota
   void tampilkanInfo() {
     print("Nama   : $nama");
     print("ID     : $idAnggota");
     print("Alamat : $alamat");
-    print("Total  : $totalPinjam buku");
+    print("Total Pinjam : $totalPinjam buku");
   }
 
-  // Method untuk meminjam buku melalui transaksi
   void pinjamBuku(Transaksi t) {
     bool hasil = t.prosesPinjam();
 
     if (hasil) {
-      totalPinjam++; // bertambah hanya jika berhasil
+      totalPinjam++;
+    }
+  }
+
+  void kembalikanBuku(Transaksi t) {
+    t.prosesKembalikan();
+
+    if (totalPinjam > 0) {
+      totalPinjam--;
     }
   }
 }
 
 // ======================================================
 // CLASS TRANSAKSI
-// Mengatur proses peminjaman buku
 // ======================================================
 class Transaksi {
-  String idTransaksi;  // ID transaksi
-  Anggota anggota;     // objek anggota
-  Buku buku;           // objek buku
-  String status;       // status transaksi
+  String idTransaksi;
+  Anggota anggota;
+  Buku buku;
+  String status;
 
-  // Constructor
   Transaksi(this.idTransaksi, this.anggota, this.buku)
       : status = "Menunggu";
 
-  // Method untuk memproses peminjaman
   bool prosesPinjam() {
-    if (buku.pinjam()) { // cek apakah buku bisa dipinjam
+    if (buku.pinjam()) {
       status = "Berhasil";
       print("Transaksi $idTransaksi BERHASIL");
       return true;
     } else {
       status = "Gagal";
-      print("Transaksi $idTransaksi GAGAL (buku tidak tersedia)");
+      print("Transaksi $idTransaksi GAGAL (Buku tidak tersedia)");
       return false;
     }
   }
 
-  // Method menampilkan struk transaksi
+  void prosesKembalikan() {
+    if (!buku.tersedia) {
+      buku.kembalikan();
+      status = "Dikembalikan";
+      print("Transaksi $idTransaksi BERHASIL DIKEMBALIKAN");
+    } else {
+      print("Buku ${buku.judul} sudah tersedia");
+    }
+  }
+
   void tampilkanStruk() {
-    print("ID       : $idTransaksi");
-    print("Anggota  : ${anggota.nama}");
-    print("Buku     : ${buku.judul}");
-    print("Status   : $status");
-    print("------------------------");
+    print("ID Transaksi : $idTransaksi");
+    print("Anggota      : ${anggota.nama}");
+    print("Buku         : ${buku.judul}");
+    print("Status       : $status");
+    print("-----------------------------");
+  }
+}
+
+// ======================================================
+// CLASS LAPORAN BUKU
+// ======================================================
+class LaporanBuku {
+  static void cetakDaftarBuku(List<Buku> daftarBuku) {
+    print("\n=== DATA BUKU ===");
+
+    for (var buku in daftarBuku) {
+      buku.tampilkanInfo();
+      print("-----------------------------");
+    }
   }
 }
 
@@ -462,16 +952,12 @@ class Transaksi {
 // ======================================================
 void main() {
 
-  // ==========================
   // DATA BUKU
-  // ==========================
   Buku b1 = Buku("OOP", "Andi", true);
   Buku b2 = Buku("Basis Data", "Budi", true);
-  Buku b3 = Buku("Jaringan", "Citra", true);
+  Buku b3 = Buku("Jaringan Komputer", "Citra", true);
 
-  // ==========================
-  // DATA ANGGOTA (10 ORANG)
-  // ==========================
+  // DATA ANGGOTA
   List<Anggota> anggota = [
     Anggota("A1", "ID1", "Jakarta"),
     Anggota("A2", "ID2", "Bandung"),
@@ -485,9 +971,7 @@ void main() {
     Anggota("A10", "ID10", "Papua"),
   ];
 
-  // ==========================
-  // DATA TRANSAKSI (>10)
-  // ==========================
+  // DATA TRANSAKSI
   List<Transaksi> transaksi = [
     Transaksi("T1", anggota[0], b1),
     Transaksi("T2", anggota[1], b2),
@@ -503,151 +987,284 @@ void main() {
     Transaksi("T12", anggota[1], b3),
   ];
 
-  // ==========================
-  // PROSES TRANSAKSI
-  // ==========================
+  // PROSES PEMINJAMAN
   print("=== PROSES PEMINJAMAN ===");
-
   for (var t in transaksi) {
     t.anggota.pinjamBuku(t);
     t.tampilkanStruk();
   }
 
-  // ==========================
-  // DATA AKHIR ANGGOTA
-  // ==========================
-  print("\n=== DATA ANGGOTA ===");
+  // PROSES PENGEMBALIAN
+  print("\n=== PROSES PENGEMBALIAN ===");
+  anggota[0].kembalikanBuku(transaksi[0]);
+  anggota[1].kembalikanBuku(transaksi[1]);
+  anggota[2].kembalikanBuku(transaksi[2]);
 
+  // DATA ANGGOTA
+  print("\n=== DATA ANGGOTA ===");
   for (var a in anggota) {
     a.tampilkanInfo();
     print("");
   }
-  
-// ======================================================
-  // PENJELASAN APLIKASI
-  // ======================================================
+
+  // DATA BUKU
+  List<Buku> daftarBuku = [b1, b2, b3];
+  LaporanBuku.cetakDaftarBuku(daftarBuku);
+
+  // PENJELASAN PROGRAM
   print("\n=== PENJELASAN APLIKASI ===");
-  print("Program ini adalah Sistem Manajemen Perpustakaan.");
-  print("Digunakan untuk mengelola peminjaman buku oleh anggota.");
-  print("Sistem terdiri dari class Buku, Anggota, dan Transaksi.");
-  print("Setiap transaksi akan mengecek ketersediaan buku.");
-  print("Jika tersedia maka berhasil, jika tidak maka gagal.");
+  print("Program ini merupakan Sistem Manajemen Perpustakaan.");
+  print("Sistem digunakan untuk mengelola data buku, anggota,");
+  print("peminjaman, dan pengembalian buku.");
+  print("Terdapat 4 class utama:");
+  print("1. Buku");
+  print("2. Anggota");
+  print("3. Transaksi");
+  print("4. LaporanBuku");
+  print("Setiap transaksi akan memeriksa ketersediaan buku.");
+  print("Jika tersedia maka peminjaman berhasil.");
+  print("Jika tidak tersedia maka transaksi gagal.");
 
-  // ======================================================
-  // PENJELASAN PENGGUNAAN
-  // ======================================================
+  // CARA PENGGUNAAN
   print("\n=== CARA PENGGUNAAN ===");
-  print("1. Masukkan data buku");
-  print("2. Masukkan data anggota");
-  print("3. Lakukan transaksi peminjaman");
-  print("4. Sistem mengecek ketersediaan buku");
-  print("5. Sistem menampilkan hasil transaksi");
-  print("6. Data anggota akan otomatis diperbarui");
+  print("1. Tambahkan data buku.");
+  print("2. Tambahkan data anggota.");
+  print("3. Lakukan transaksi peminjaman.");
+  print("4. Lakukan transaksi pengembalian.");
+  print("5. Tampilkan data anggota.");
+  print("6. Tampilkan data buku.");
+  print("7. Cetak laporan perpustakaan.");
 }
+</code></pre>
+                <button class="btn-popup" onclick="openDartPad('e53c4c3d3e75e388a0de2eac495e8335')">▶ Jalankan Kode di
+                    DartPad</button>
+            </div>
+    </section>
 
-</div>
-    <button class="btn-popup" onclick="openDartPad('e06a74f83ad85d002c711913e8c86246')">▶ Jalankan Kode di DartPad</button>
-</button>
-  </div>
-</div>
+    <!-- ============================================ -->
+    <!-- SECTION 10: KESIMPULAN -->
+    <!-- ============================================ -->
+    <section class="container">
+        <div class="card">
+            <h2>🔹 Kesimpulan</h2>
+            <div class="topik-section">
+                <div class="topik-penjelasan">
+                    <p>Sistem manajemen perpustakaan memiliki berbagai permasalahan seperti data yang tidak terstruktur,
+                        sulitnya melacak peminjaman, serta proses yang tidak efisien. Dengan menggunakan Object-Oriented
+                        Programming (OOP), semua masalah tersebut dapat diselesaikan secara lebih terorganisir dan
+                        sistematis.</p>
+                    <p>Melalui OOP, setiap komponen seperti Buku, Anggota, dan Transaksi dipisahkan ke dalam class
+                        masing-masing sehingga data menjadi lebih rapi, mudah dikelola, dan tidak saling tercampur.
+                        Selain itu, OOP juga memudahkan pengembangan sistem di masa depan, mengurangi duplikasi kode,
+                        serta meningkatkan keamanan data melalui konsep encapsulation.</p>
+                    <p>Implementasi dalam bentuk program (seperti menggunakan Dart) menunjukkan bahwa proses peminjaman
+                        dan pengembalian dapat berjalan lebih jelas, terstruktur, dan sesuai dengan kondisi nyata di
+                        perpustakaan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="container">
-  <div class="card">
-    <h2> 🔹 Kesimpulan  </h2>
-    <div class="topik-section">
- <div class="topik-penjelasan">
-  
-    <p>
- Sistem manajemen perpustakaan memiliki berbagai permasalahan seperti data yang tidak terstruktur, sulitnya melacak peminjaman, serta proses yang tidak efisien. Dengan menggunakan Object-Oriented Programming (OOP), semua masalah tersebut dapat diselesaikan secara lebih terorganisir dan sistematis.
- Melalui OOP, setiap komponen seperti Buku, Anggota, dan Transaksi dipisahkan ke dalam class masing-masing sehingga data menjadi lebih rapi, mudah dikelola, dan tidak saling tercampur. Selain itu, OOP juga memudahkan pengembangan sistem di masa depan, mengurangi duplikasi kode, serta meningkatkan keamanan data melalui konsep encapsulation.
- Implementasi dalam bentuk program (seperti menggunakan Dart) menunjukkan bahwa proses peminjaman dan pengembalian dapat berjalan lebih jelas, terstruktur, dan sesuai dengan kondisi nyata di perpustakaan.
-</p>
-
-</div>
-</section>
-
-    <!-- MODAL UNTUK DARTPAD -->
-<div id="dartpadModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeDartPad()">&times;</span>
-        <iframe id="dartpadIframe" src="" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+    <!-- ============================================ -->
+    <!-- MODAL DARTPAD -->
+    <!-- ============================================ -->
+    <div id="dartpadModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeDartPad()">&times;</span>
+            <iframe id="dartpadIframe" src=""
+                allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+                sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+        </div>
     </div>
-</div>
 
-<script>
-    // SECURITY PROTOCOL: ANTI-VANDALISM & ANTI-VIEWSOURCE
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.onkeydown = function (e) {
-      if (e.keyCode == 123) return false; // F12
-      if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
-      if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
-      if (e.ctrlKey && e.keyCode == 83) return false; // Ctrl+S
-    };
-    
-    // Fungsi untuk membuka DartPad di modal
-    function openDartPad(id) {
-        const modal = document.getElementById('dartpadModal');
-        const iframe = document.getElementById('dartpadIframe');
+    <!-- ============================================ -->
+    <!-- MODAL IMAGE -->
+    <!-- ============================================ -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-image" onclick="closeImage()">&times;</span>
+        <img class="image-modal-content" id="popupImage">
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL DIAGRAM FULLSCREEN -->
+    <!-- ============================================ -->
+    <div id="diagramModal" class="modal">
+        <div class="modal-content" style="max-width: 1300px; width: 95%; height: 90%; display: flex; flex-direction: column; background: #fff0f7; border: 2px solid #cc0066; padding: 20px;">
+            <span class="close-btn" onclick="closeDiagramModal()">&times;</span>
+            <h2 id="diagramModalTitle" style="color: #cc0066; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #ffb3d9; padding-bottom: 8px;">DETAIL DIAGRAM</h2>
+            <div id="modalDiagramContainer" style="flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ffb3d9;">
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer>
+        <p style="margin:0;color:#4a0d33;font-weight:bold;">
+            Nabilah Cahya Suci | 251410018 &nbsp;|&nbsp; Aghista Bunga Kirani | 251410027<br>
+            SI2A - Sistem Manajemen Perpustakaan
+        </p>
+    </footer>
+    <!-- ============================================ -->
+    <!-- MERMAID DIAGRAMS -->
+    <!-- ============================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'base',
+          themeVariables: {
+            background: 'transparent',
+            primaryColor: '#fff0f7',
+            primaryTextColor: '#cc0066',
+            primaryBorderColor: '#ffb3d9',
+            lineColor: '#cc0066',
+            secondaryColor: '#cc0066',
+            tertiaryColor: '#fff0f7',
+            edgeLabelBackground: '#fff0f7',
+            nodeBorder: '#ffb3d9',
+            mainBkg: '#ffffff',
+            actorBorder: '#ffb3d9',
+            actorBkg: '#fff0f7',
+            labelBoxBkgColor: '#fff0f7',
+            labelBoxBorderColor: '#ffb3d9',
+            labelTextColor: '#cc0066',
+            loopBkgColor: '#fff0f7',
+            loopBorderColor: '#ffb3d9',
+            noteBorderColor: '#ffb3d9',
+            noteBkgColor: '#fff0f7',
+            classText: '#cc0066'
+          }
+        });
+
+        async function renderMermaidManual() {
+            const els = document.querySelectorAll('.mermaid');
+            for (let i = 0; i < els.length; i++) {
+                const el = els[i];
+                const code = el.textContent;
+                try {
+                    const { svg } = await mermaid.render('mermaid-svg-' + i, code);
+                    el.innerHTML = svg;
+                } catch (err) {
+                    console.error('Mermaid Error in diagram ' + i + ':', err);
+                }
+            }
+        }
         
-        // Set src iframe dengan ID yang benar
-        iframe.src = 'https://dartpad.dev/embed-inline.html?id=' + id + '&theme=dark&run=true';
-        
-        // Tampilkan modal
-        modal.style.display = 'block';
-        
-        // Cegah scroll di background
-        document.body.style.overflow = 'hidden';
-    }
-    // Fungsi buka gambar
-function openImage(src) {
-    const modal = document.getElementById("imageModal");
-    const img = document.getElementById("popupImage");
+        setTimeout(renderMermaidManual, 500);
+    </script>
 
-    img.src = src;
-    modal.style.display = "block";
-    document.body.style.overflow = "hidden";
-}
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================ -->
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = function (e) {
+            if (e.keyCode == 123) return false;
+            if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false;
+            if (e.ctrlKey && e.keyCode == 85) return false;
+            if (e.ctrlKey && e.keyCode == 83) return false;
+        };
 
-// Fungsi tutup gambar
-function closeImage() {
-    const modal = document.getElementById("imageModal");
+        function switchDiagramTab(event, tabId) {
+            const buttons = document.querySelectorAll('.diag-tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            
+            const contents = document.querySelectorAll('.diag-tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+                content.classList.add('hidden-tab');
+            });
+            
+            const activeContent = document.getElementById(tabId);
+            if (activeContent) {
+                activeContent.classList.remove('hidden-tab');
+                activeContent.classList.add('active');
+            }
+        }
 
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-}
+        function openDartPad(id) {
+            const modal = document.getElementById('dartpadModal');
+            const iframe = document.getElementById('dartpadIframe');
+            iframe.src = 'https://dartpad.dev/embed-inline.html?id=' + id + '&theme=dark&run=true';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
 
-    // Fungsi untuk menutup modal
-    function closeDartPad() {
-        const modal = document.getElementById('dartpadModal');
-        const iframe = document.getElementById('dartpadIframe');
-        
-        // Sembunyikan modal
-        modal.style.display = 'none';
-        
-        // Hentikan iframe dengan mengosongkan src
-        iframe.src = '';
-        
-        // Kembalikan scroll
-        document.body.style.overflow = 'auto';
-    }
+        function openImage(src) {
+            const modal = document.getElementById("imageModal");
+            const img = document.getElementById("popupImage");
+            img.src = src;
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
 
-    // Tutup modal jika klik di luar konten modal
-    window.onclick = function(event) {
-    const dartModal = document.getElementById('dartpadModal');
-    const imageModal = document.getElementById('imageModal');
+        function closeImage() {
+            const modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
 
-    if (event.target == dartModal) {
-        closeDartPad();
-    }
-    if (event.target == imageModal) {
-        closeImage();
-    }
-}
-</script>
-<!-- MODAL IMAGE -->
-<div id="imageModal" class="image-modal">
-    <span class="close-image" onclick="closeImage()">&times;</span>
-    <img class="image-modal-content" id="popupImage">
-</div>
+        function closeDartPad() {
+            const modal = document.getElementById('dartpadModal');
+            const iframe = document.getElementById('dartpadIframe');
+            modal.style.display = 'none';
+            iframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function zoomDiagram(containerId, title) {
+            const originalMermaid = document.querySelector(`#${containerId} .mermaid`);
+            if (!originalMermaid) return;
+            
+            const container = document.getElementById('modalDiagramContainer');
+            document.getElementById('diagramModalTitle').textContent = title || 'DETAIL DIAGRAM';
+            
+            container.innerHTML = originalMermaid.innerHTML;
+            
+            const svg = container.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '1200px';
+                svg.style.minWidth = '800px';
+            }
+            
+            const modal = document.getElementById('diagramModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDiagramModal() {
+            const modal = document.getElementById("diagramModal");
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+            const container = document.getElementById("modalDiagramContainer");
+            if (container) {
+                container.innerHTML = "";
+            }
+        }
+
+        window.onclick = function (event) {
+            const dartModal = document.getElementById('dartpadModal');
+            const imageModal = document.getElementById('imageModal');
+            const diagramModal = document.getElementById('diagramModal');
+            if (event.target == dartModal) {
+                closeDartPad();
+            }
+            if (event.target == imageModal) {
+                closeImage();
+            }
+            if (event.target == diagramModal) {
+                closeDiagramModal();
+            }
+        }
+    </script>
+
 </body>
+
 </html>
