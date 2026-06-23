@@ -344,9 +344,17 @@
             border-radius: 50%;
         }
 
-        .pseudocode-header .dot.red { background: #ff5f56; }
-        .pseudocode-header .dot.yellow { background: #ffbd2e; }
-        .pseudocode-header .dot.green { background: #27c93f; }
+        .pseudocode-header .dot.red {
+            background: #ff5f56;
+        }
+
+        .pseudocode-header .dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .pseudocode-header .dot.green {
+            background: #27c93f;
+        }
 
         .pseudocode-header .title {
             color: #ffe6f2;
@@ -387,15 +395,18 @@
             width: 8px;
             height: 8px;
         }
+
         .pseudocode-wrapper::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.02);
             border-radius: 10px;
         }
+
         .pseudocode-wrapper::-webkit-scrollbar-thumb {
             background: #ffb3d9;
             border-radius: 10px;
             border: 2px solid #2d0a1f;
         }
+
         .pseudocode-wrapper::-webkit-scrollbar-thumb:hover {
             background: #cc0066;
         }
@@ -433,6 +444,7 @@
                 grid-template-columns: 1fr;
             }
         }
+
         .mermaid {
             background: transparent;
             border: none;
@@ -442,6 +454,7 @@
             overflow-x: auto;
             width: 100%;
         }
+
         .mermaid svg {
             max-width: 100%;
             height: auto;
@@ -531,7 +544,8 @@
                     <p><b>a. Data Lebih Terstruktur</b><br>
                         Dalam OOP, setiap entitas seperti <i>Buku</i>, <i>Anggota</i>, <i>Petugas</i>, dan
                         <i>Transaksi</i> dibuat dalam class terpisah. Hal ini membuat data tidak tercampur, lebih rapi,
-                        dan mudah dikelola.</p>
+                        dan mudah dikelola.
+                    </p>
 
                     <p><b>b. Mudah Dikembangkan</b><br>
                         OOP memungkinkan penambahan fitur baru (seperti denda atau reservasi) tanpa mengubah seluruh
@@ -610,67 +624,76 @@
         <div class="card">
             <h2>📊 DIAGRAM LOGIKA &amp; ALUR SISTEM</h2>
             <div style="color: #666; font-size: 14.5px; margin-bottom: 20px; line-height: 1.5;">
-                Visualisasi diagram kelas OOP (Object-Oriented Programming), alur algoritma peminjaman buku, dan alur algoritma pengembalian buku pada sistem perpustakaan.
+                Visualisasi diagram kelas OOP (Object-Oriented Programming), alur algoritma peminjaman buku, dan alur
+                algoritma pengembalian buku pada sistem perpustakaan.
             </div>
-            
+
             <div class="diag-tabs">
-                <button class="diag-tab-btn active" onclick="switchDiagramTab(event, 'diag-uml')">Diagram Kelas (UML)</button>
-                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-booking')">Alur Peminjaman (Flowchart &amp; Pseudocode)</button>
-                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-return')">Alur Pengembalian (Flowchart &amp; Pseudocode)</button>
+                <button class="diag-tab-btn active" onclick="switchDiagramTab(event, 'diag-uml')">Diagram Kelas
+                    (UML)</button>
+                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-booking')">Alur Peminjaman
+                    (Flowchart &amp; Pseudocode)</button>
+                <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-return')">Alur Pengembalian
+                    (Flowchart &amp; Pseudocode)</button>
             </div>
 
             <!-- Tab: UML -->
             <div class="diag-tab-content active" id="diag-uml">
                 <div class="note" style="margin-bottom: 15px;">
-                    <p><strong>Deskripsi:</strong> Class Diagram menunjukkan hubungan antar class dalam sistem perpustakaan:</p>
+                    <p><strong>Deskripsi:</strong> Class Diagram menunjukkan hubungan antar class dalam sistem
+                        perpustakaan:</p>
                     <ul>
-                        <li><strong>Buku</strong> - atribut: judul, penulis, tersedia | method: pinjam(), kembalikan(), tampilkanInfo()</li>
-                        <li><strong>Anggota</strong> - atribut: nama, idAnggota, alamat, totalPinjam | method: pinjamBuku(), kembalikanBuku(), tampilkanInfo()</li>
-                        <li><strong>Transaksi</strong> - atribut: idTransaksi, status | method: prosesPinjam(), prosesKembalikan(), tampilkanStruk()</li>
+                        <li><strong>Buku</strong> - atribut: judul, penulis, tersedia | method: pinjam(), kembalikan(),
+                            tampilkanInfo()</li>
+                        <li><strong>Anggota</strong> - atribut: nama, idAnggota, alamat, totalPinjam | method:
+                            pinjamBuku(), kembalikanBuku(), tampilkanInfo()</li>
+                        <li><strong>Transaksi</strong> - atribut: idTransaksi, status | method: prosesPinjam(),
+                            prosesKembalikan(), tampilkanStruk()</li>
                         <li><strong>LaporanBuku</strong> - method static: cetakDaftarBuku()</li>
                     </ul>
                 </div>
                 <div class="diagram-card-wrapper">
-                    <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                    <div class="diagram-container"
+                        style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
                         <div class="mermaid">
-classDiagram
-    class Buku {
-        +String judul
-        +String penulis
-        +bool tersedia
-        +Buku(String judul, String penulis, bool tersedia)
-        +void tampilkanInfo()
-        +bool pinjam()
-        +void kembalikan()
-    }
-    class Anggota {
-        +String nama
-        +String idAnggota
-        +String alamat
-        +int totalPinjam
-        +Anggota(String nama, String idAnggota, String alamat)
-        +void tampilkanInfo()
-        +void pinjamBuku(Transaksi t)
-        +void kembalikanBuku(Transaksi t)
-    }
-    class Transaksi {
-        +String idTransaksi
-        +Anggota anggota
-        +Buku buku
-        +String status
-        +Transaksi(String idTransaksi, Anggota anggota, Buku buku)
-        +bool prosesPinjam()
-        +void prosesKembalikan()
-        +void tampilkanStruk()
-    }
-    class LaporanBuku {
-        +static void cetakDaftarBuku(List~Buku~ daftarBuku)
-    }
+                            classDiagram
+                            class Buku {
+                            +String judul
+                            +String penulis
+                            +bool tersedia
+                            +Buku(String judul, String penulis, bool tersedia)
+                            +void tampilkanInfo()
+                            +bool pinjam()
+                            +void kembalikan()
+                            }
+                            class Anggota {
+                            +String nama
+                            +String idAnggota
+                            +String alamat
+                            +int totalPinjam
+                            +Anggota(String nama, String idAnggota, String alamat)
+                            +void tampilkanInfo()
+                            +void pinjamBuku(Transaksi t)
+                            +void kembalikanBuku(Transaksi t)
+                            }
+                            class Transaksi {
+                            +String idTransaksi
+                            +Anggota anggota
+                            +Buku buku
+                            +String status
+                            +Transaksi(String idTransaksi, Anggota anggota, Buku buku)
+                            +bool prosesPinjam()
+                            +void prosesKembalikan()
+                            +void tampilkanStruk()
+                            }
+                            class LaporanBuku {
+                            +static void cetakDaftarBuku(List~Buku~ daftarBuku)
+                            }
 
-    Anggota --> Transaksi : Memiliki / Melakukan
-    Transaksi --> Buku : Meminjam
-    Transaksi --> Anggota : Mengaitkan
-    LaporanBuku ..> Buku : Menggunakan
+                            Anggota --> Transaksi : Memiliki / Melakukan
+                            Transaksi --> Buku : Meminjam
+                            Transaksi --> Anggota : Mengaitkan
+                            LaporanBuku ..> Buku : Menggunakan
                         </div>
                     </div>
                 </div>
@@ -680,25 +703,26 @@ classDiagram
             <div class="diag-tab-content hidden-tab" id="diag-booking">
                 <div class="diag-split">
                     <div class="diagram-card-wrapper">
-                        <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                        <div class="diagram-container"
+                            style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
                             <div class="mermaid">
-flowchart TD
-    Start([Mulai]) --> CallPinjam[Anggota Panggil pinjamBuku t]
-    CallPinjam --> ProcPinjam[Transaksi Jalankan prosesPinjam]
-    ProcPinjam --> CheckAvail{Buku Tersedia?}
-    
-    CheckAvail -- Ya --> BookPinjam[buku.pinjam: set tersedia = false]
-    BookPinjam --> SetSuccess[status = Berhasil]
-    SetSuccess --> ReturnTrue[Return true]
-    ReturnTrue --> IncPinjam[anggota.totalPinjam + 1]
-    
-    CheckAvail -- Tidak --> SetFailed[status = Gagal]
-    SetFailed --> ReturnFalse[Return false]
-    ReturnFalse --> KeepPinjam[anggota.totalPinjam tetap]
-    
-    IncPinjam --> PrintStruk[t.tampilkanStruk]
-    KeepPinjam --> PrintStruk
-    PrintStruk --> End([Selesai])
+                                flowchart TD
+                                Start([Mulai]) --> CallPinjam[Anggota Panggil pinjamBuku t]
+                                CallPinjam --> ProcPinjam[Transaksi Jalankan prosesPinjam]
+                                ProcPinjam --> CheckAvail{Buku Tersedia?}
+
+                                CheckAvail -- Ya --> BookPinjam[buku.pinjam: set tersedia = false]
+                                BookPinjam --> SetSuccess[status = Berhasil]
+                                SetSuccess --> ReturnTrue[Return true]
+                                ReturnTrue --> IncPinjam[anggota.totalPinjam + 1]
+
+                                CheckAvail -- Tidak --> SetFailed[status = Gagal]
+                                SetFailed --> ReturnFalse[Return false]
+                                ReturnFalse --> KeepPinjam[anggota.totalPinjam tetap]
+
+                                IncPinjam --> PrintStruk[t.tampilkanStruk]
+                                KeepPinjam --> PrintStruk
+                                PrintStruk --> End([Selesai])
                             </div>
                         </div>
                     </div>
@@ -712,37 +736,67 @@ flowchart TD
                             <div class="title">📋 Pseudocode Peminjaman Buku</div>
                             <div style="width: 42px;"></div>
                         </div>
-                        <pre><span class="comment">// Algoritma Peminjaman Buku</span>
-<span class="keyword">FUNGSI</span> pinjamBuku(t: Transaksi)
-<span class="keyword">MULAI</span>:
-    hasil = t.prosesPinjam()
-    <span class="keyword">JIKA</span> hasil == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
-        totalPinjam = totalPinjam + <span class="number">1</span>
+                        <pre><span class="comment">// =====================================
+// PSEUDOCODE PEMINJAMAN BUKU
+// =====================================</span>
+<span class="keyword">PROSEDUR</span> pinjamBuku(t : Transaksi)
+<span class="keyword">MULAI</span>
+    <span class="keyword">TAMPILKAN</span> "Memulai proses peminjaman..."
+    hasil ← t.prosesPinjam()
+    <span class="keyword">JIKA</span> hasil = <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        totalPinjam ← totalPinjam + <span class="number">1</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Peminjaman berhasil"
+        <span class="keyword">TAMPILKAN</span>
+        "Total buku dipinjam : ", totalPinjam
+    <span class="keyword">LAINNYA</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Peminjaman gagal"
+    <span class="keyword">AKHIR JIKA</span>
+    t.tampilkanStruk()
+<span class="keyword">SELESAI</span>
+
+<span class="comment">// =====================================
+// PROSES TRANSAKSI PEMINJAMAN
+// =====================================</span>
+<span class="keyword">FUNGSI</span> prosesPinjam() → Boolean
+<span class="keyword">MULAI</span>
+    <span class="keyword">TAMPILKAN</span>
+    "Memeriksa ketersediaan buku..."
+    <span class="keyword">JIKA</span> buku.pinjam() = <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        status ← <span class="string">"Berhasil"</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Transaksi berhasil diproses"
+        <span class="keyword">KEMBALIKAN</span>
+        <span class="keyword">TRUE</span>
+    <span class="keyword">LAINNYA</span>
+        status ← <span class="string">"Gagal"</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Buku sedang dipinjam"
+        <span class="keyword">KEMBALIKAN</span>
+        <span class="keyword">FALSE</span>
     <span class="keyword">AKHIR JIKA</span>
 <span class="keyword">SELESAI</span>
 
-<span class="keyword">FUNGSI</span> prosesPinjam() -> <span class="keyword">Boolean</span>
-<span class="keyword">MULAI</span>:
-    <span class="keyword">JIKA</span> buku.pinjam() == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
-        status = <span class="string">"Berhasil"</span>
-        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi BERHASIL"</span>
-        <span class="keyword">KEMBALIKAN</span> <span class="keyword">TRUE</span>
+<span class="comment">// =====================================
+// PROSES PADA CLASS BUKU
+// =====================================</span>
+<span class="keyword">FUNGSI</span> pinjam() → Boolean
+<span class="keyword">MULAI</span>
+    <span class="keyword">JIKA</span> tersedia = <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
+        tersedia ← <span class="keyword">FALSE</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Status buku berubah menjadi DIPINJAM"
+        <span class="keyword">KEMBALIKAN</span>
+        <span class="keyword">TRUE</span>
     <span class="keyword">LAINNYA</span>
-        status = <span class="string">"Gagal"</span>
-        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi GAGAL"</span>
-        <span class="keyword">KEMBALIKAN</span> <span class="keyword">FALSE</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Buku tidak tersedia"
+        <span class="keyword">KEMBALIKAN</span>
+        <span class="keyword">FALSE</span>
     <span class="keyword">AKHIR JIKA</span>
 <span class="keyword">SELESAI</span>
-
-<span class="keyword">FUNGSI</span> pinjam() -> <span class="keyword">Boolean</span>
-<span class="keyword">MULAI</span>:
-    <span class="keyword">JIKA</span> tersedia == <span class="keyword">TRUE</span> <span class="keyword">MAKA</span>
-        tersedia = <span class="keyword">FALSE</span>
-        <span class="keyword">KEMBALIKAN</span> <span class="keyword">TRUE</span>
-    <span class="keyword">LAINNYA</span>
-        <span class="keyword">KEMBALIKAN</span> <span class="keyword">FALSE</span>
-    <span class="keyword">AKHIR JIKA</span>
-<span class="keyword">SELESAI</span></pre>
+</pre>
                     </div>
                 </div>
             </div>
@@ -751,24 +805,25 @@ flowchart TD
             <div class="diag-tab-content hidden-tab" id="diag-return">
                 <div class="diag-split">
                     <div class="diagram-card-wrapper">
-                        <div class="diagram-container" style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
+                        <div class="diagram-container"
+                            style="background: #fafafa; border: 1px solid #ffb3d9; padding: 20px;">
                             <div class="mermaid">
-flowchart TD
-    Start([Mulai]) --> CallKembali[Anggota Panggil kembalikanBuku t]
-    CallKembali --> ProcKembali[Transaksi Jalankan prosesKembalikan]
-    ProcKembali --> CheckBorrowed{Buku Sedang Dipinjam? tersedia == false}
-    
-    CheckBorrowed -- Ya --> BookReturn[buku.kembalikan: set tersedia = true]
-    BookReturn --> SetReturned[status = Dikembalikan]
-    SetReturned --> CheckTotalPinjam{anggota.totalPinjam > 0?}
-    CheckTotalPinjam -- Ya --> DecPinjam[anggota.totalPinjam - 1]
-    CheckTotalPinjam -- Tidak --> KeepTotal[anggota.totalPinjam tetap]
-    
-    CheckBorrowed -- Tidak --> BookAvail[Print Buku sudah tersedia]
-    
-    DecPinjam --> End([Selesai])
-    KeepTotal --> End
-    BookAvail --> End
+                                flowchart TD
+                                Start([Mulai]) --> CallKembali[Anggota Panggil kembalikanBuku t]
+                                CallKembali --> ProcKembali[Transaksi Jalankan prosesKembalikan]
+                                ProcKembali --> CheckBorrowed{Buku Sedang Dipinjam? tersedia == false}
+
+                                CheckBorrowed -- Ya --> BookReturn[buku.kembalikan: set tersedia = true]
+                                BookReturn --> SetReturned[status = Dikembalikan]
+                                SetReturned --> CheckTotalPinjam{anggota.totalPinjam > 0?}
+                                CheckTotalPinjam -- Ya --> DecPinjam[anggota.totalPinjam - 1]
+                                CheckTotalPinjam -- Tidak --> KeepTotal[anggota.totalPinjam tetap]
+
+                                CheckBorrowed -- Tidak --> BookAvail[Print Buku sudah tersedia]
+
+                                DecPinjam --> End([Selesai])
+                                KeepTotal --> End
+                                BookAvail --> End
                             </div>
                         </div>
                     </div>
@@ -782,30 +837,47 @@ flowchart TD
                             <div class="title">📋 Pseudocode Pengembalian Buku</div>
                             <div style="width: 42px;"></div>
                         </div>
-                        <pre><span class="comment">// Algoritma Pengembalian Buku</span>
-<span class="keyword">FUNGSI</span> kembalikanBuku(t: Transaksi)
-<span class="keyword">MULAI</span>:
+                        <pre><span class="comment">// =====================================
+// PSEUDOCODE PENGEMBALIAN BUKU
+// =====================================</span>
+<span class="keyword">PROSEDUR</span> kembalikanBuku(t : Transaksi)
+<span class="keyword">MULAI</span>
+    <span class="keyword">TAMPILKAN</span>
+    "Memulai proses pengembalian..."
     t.prosesKembalikan()
     <span class="keyword">JIKA</span> totalPinjam > <span class="number">0</span> <span class="keyword">MAKA</span>
-        totalPinjam = totalPinjam - <span class="number">1</span>
+        totalPinjam ← totalPinjam - <span class="number">1</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Jumlah buku dipinjam berkurang"
     <span class="keyword">AKHIR JIKA</span>
 <span class="keyword">SELESAI</span>
 
-<span class="keyword">FUNGSI</span> prosesKembalikan()
-<span class="keyword">MULAI</span>:
-    <span class="keyword">JIKA</span> buku.tersedia == <span class="keyword">FALSE</span> <span class="keyword">MAKA</span>
+<span class="comment">// =====================================
+// PROSES TRANSAKSI PENGEMBALIAN
+// =====================================</span>
+<span class="keyword">PROSEDUR</span> prosesKembalikan()
+<span class="keyword">MULAI</span>
+    <span class="keyword">JIKA</span> buku.tersedia = <span class="keyword">FALSE</span> <span class="keyword">MAKA</span>
         buku.kembalikan()
-        status = <span class="string">"Dikembalikan"</span>
-        <span class="keyword">TAMPILKAN</span> <span class="string">"Transaksi BERHASIL DIKEMBALIKAN"</span>
+        status ← <span class="string">"Dikembalikan"</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Pengembalian berhasil"
     <span class="keyword">LAINNYA</span>
-        <span class="keyword">TAMPILKAN</span> <span class="string">"Buku sudah tersedia"</span>
+        <span class="keyword">TAMPILKAN</span>
+        "Buku sudah tersedia di perpustakaan"
     <span class="keyword">AKHIR JIKA</span>
 <span class="keyword">SELESAI</span>
 
-<span class="keyword">FUNGSI</span> kembalikan()
-<span class="keyword">MULAI</span>:
-    tersedia = <span class="keyword">TRUE</span>
-<span class="keyword">SELESAI</span></pre>
+<span class="comment">// =====================================
+// PROSES PADA CLASS BUKU
+// =====================================</span>
+<span class="keyword">PROSEDUR</span> kembalikan()
+<span class="keyword">MULAI</span>
+    tersedia ← <span class="keyword">TRUE</span>
+    <span class="keyword">TAMPILKAN</span>
+    "Status buku berubah menjadi TERSEDIA"
+<span class="keyword">SELESAI</span>
+</pre>
                     </div>
                 </div>
             </div>
@@ -1089,10 +1161,14 @@ void main() {
     <!-- MODAL DIAGRAM FULLSCREEN -->
     <!-- ============================================ -->
     <div id="diagramModal" class="modal">
-        <div class="modal-content" style="max-width: 1300px; width: 95%; height: 90%; display: flex; flex-direction: column; background: #fff0f7; border: 2px solid #cc0066; padding: 20px;">
+        <div class="modal-content"
+            style="max-width: 1300px; width: 95%; height: 90%; display: flex; flex-direction: column; background: #fff0f7; border: 2px solid #cc0066; padding: 20px;">
             <span class="close-btn" onclick="closeDiagramModal()">&times;</span>
-            <h2 id="diagramModalTitle" style="color: #cc0066; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #ffb3d9; padding-bottom: 8px;">DETAIL DIAGRAM</h2>
-            <div id="modalDiagramContainer" style="flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ffb3d9;">
+            <h2 id="diagramModalTitle"
+                style="color: #cc0066; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #ffb3d9; padding-bottom: 8px;">
+                DETAIL DIAGRAM</h2>
+            <div id="modalDiagramContainer"
+                style="flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ffb3d9;">
             </div>
         </div>
     </div>
@@ -1112,30 +1188,30 @@ void main() {
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({
-          startOnLoad: false,
-          theme: 'base',
-          themeVariables: {
-            background: 'transparent',
-            primaryColor: '#fff0f7',
-            primaryTextColor: '#cc0066',
-            primaryBorderColor: '#ffb3d9',
-            lineColor: '#cc0066',
-            secondaryColor: '#cc0066',
-            tertiaryColor: '#fff0f7',
-            edgeLabelBackground: '#fff0f7',
-            nodeBorder: '#ffb3d9',
-            mainBkg: '#ffffff',
-            actorBorder: '#ffb3d9',
-            actorBkg: '#fff0f7',
-            labelBoxBkgColor: '#fff0f7',
-            labelBoxBorderColor: '#ffb3d9',
-            labelTextColor: '#cc0066',
-            loopBkgColor: '#fff0f7',
-            loopBorderColor: '#ffb3d9',
-            noteBorderColor: '#ffb3d9',
-            noteBkgColor: '#fff0f7',
-            classText: '#cc0066'
-          }
+            startOnLoad: false,
+            theme: 'base',
+            themeVariables: {
+                background: 'transparent',
+                primaryColor: '#fff0f7',
+                primaryTextColor: '#cc0066',
+                primaryBorderColor: '#ffb3d9',
+                lineColor: '#cc0066',
+                secondaryColor: '#cc0066',
+                tertiaryColor: '#fff0f7',
+                edgeLabelBackground: '#fff0f7',
+                nodeBorder: '#ffb3d9',
+                mainBkg: '#ffffff',
+                actorBorder: '#ffb3d9',
+                actorBkg: '#fff0f7',
+                labelBoxBkgColor: '#fff0f7',
+                labelBoxBorderColor: '#ffb3d9',
+                labelTextColor: '#cc0066',
+                loopBkgColor: '#fff0f7',
+                loopBorderColor: '#ffb3d9',
+                noteBorderColor: '#ffb3d9',
+                noteBkgColor: '#fff0f7',
+                classText: '#cc0066'
+            }
         });
 
         async function renderMermaidManual() {
@@ -1151,7 +1227,7 @@ void main() {
                 }
             }
         }
-        
+
         setTimeout(renderMermaidManual, 500);
     </script>
 
@@ -1170,15 +1246,15 @@ void main() {
         function switchDiagramTab(event, tabId) {
             const buttons = document.querySelectorAll('.diag-tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            
+
             event.currentTarget.classList.add('active');
-            
+
             const contents = document.querySelectorAll('.diag-tab-content');
             contents.forEach(content => {
                 content.classList.remove('active');
                 content.classList.add('hidden-tab');
             });
-            
+
             const activeContent = document.getElementById(tabId);
             if (activeContent) {
                 activeContent.classList.remove('hidden-tab');
@@ -1219,12 +1295,12 @@ void main() {
         function zoomDiagram(containerId, title) {
             const originalMermaid = document.querySelector(`#${containerId} .mermaid`);
             if (!originalMermaid) return;
-            
+
             const container = document.getElementById('modalDiagramContainer');
             document.getElementById('diagramModalTitle').textContent = title || 'DETAIL DIAGRAM';
-            
+
             container.innerHTML = originalMermaid.innerHTML;
-            
+
             const svg = container.querySelector('svg');
             if (svg) {
                 svg.removeAttribute('height');
@@ -1233,7 +1309,7 @@ void main() {
                 svg.style.maxWidth = '1200px';
                 svg.style.minWidth = '800px';
             }
-            
+
             const modal = document.getElementById('diagramModal');
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
